@@ -1,0 +1,86 @@
+package com.backjoon.algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Backjoon1012유기농배추_temp {
+	static int M = 0; // 가로
+	static int N = 0; // 세로
+	static int K = 0; // 배추 개수
+
+	static int[][] arr = new int[0][0];
+
+	// 방문했는지 확인하기 위해
+	static boolean[][] visit = new boolean[0][0];
+
+	static int[] dx = { -1, 1, 0, 0 };
+	static int[] dy = { 0, 0, -1, 1 };
+
+	private static void dfs(int a, int b) {
+		visit[a][b] = true;
+
+		for (int i = 0; i < 4; i++) {
+			int x = a + dx[i];
+			int y = b + dy[i];
+
+			if (x > 0 && y > 0 && x < M && y < N) {
+				if (!visit[x][y] && arr[x][y] == 1)
+					dfs(x, y);
+			}
+		}
+	}
+
+	public static void main(String[] args) throws Exception, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = null;
+		// 테스트케이스 갯수
+		int T = Integer.parseInt(br.readLine());
+
+		int count = 0;
+
+		int i = 0;
+		int j = 0;
+		for (i = 0; i < T; i++) {
+			st = new StringTokenizer(br.readLine());
+
+			// 배열 크기, 배추 갯수
+			M = Integer.parseInt(st.nextToken());
+			N = Integer.parseInt(st.nextToken());
+			K = Integer.parseInt(st.nextToken());
+
+			// 배열 크기 선언
+			arr = new int[M][N];
+			visit = new boolean[M][N];
+
+			// 배추 심어진 곳 1로 나오도록
+			int arrx = 0;
+			int arry = 0;
+			for (j = 0; j < K; j++) {
+				st = new StringTokenizer(br.readLine());
+				arrx = Integer.parseInt(st.nextToken());
+				arry = Integer.parseInt(st.nextToken());
+
+				arr[arrx][arry] = 1;
+			}
+
+			// 1을 찾으면 상, 하, 좌, 우 확인
+			// 상, 하, 좌, 우 중에 추가로 1을 찾으면
+			// 다시 그 주변의 상,하,좌,우 확인
+			// 주변에 없으면 자신을 0 으로 바꾸고 return;
+
+			for (int a = 0; a < M; a++) {
+				for (int b = 0; b < N; b++) {
+					// 너비탐색, 깊이탐색을 하는 것 같은데...
+					if (arr[a][b] == 1 && !visit[a][b]) {
+						dfs(a, b);
+						count++;
+					}
+				}
+			}
+
+			System.out.println(count);
+		}
+	}
+}
