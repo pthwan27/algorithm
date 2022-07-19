@@ -2,7 +2,7 @@ package com.backjoon.algorithm;
 
 import java.util.Scanner;
  
-public class Main {
+public class Backjoon2798 {
 	static char[][] arr;
  
 	public static void main(String[] args) {
