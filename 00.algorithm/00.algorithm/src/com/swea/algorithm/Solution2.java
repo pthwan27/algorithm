@@ -65,7 +65,7 @@ public class Solution2 {
 				arr = roarr;
 
 			}
-			System.out.println("#" + c + " ");
+			System.out.println("#" + tc + " ");
 			for (i = 0; i < N; i++) {
 				for (j = 0; j < 3; j++) {
 					System.out.print(result[i][j] + " ");

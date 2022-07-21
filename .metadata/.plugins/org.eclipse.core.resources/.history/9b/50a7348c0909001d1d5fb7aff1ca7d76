@@ -1,0 +1,52 @@
+package com.backjoon.algorithm;
+
+import java.util.Scanner;
+
+public class Backjoon2231분해합 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		
+		int MIN_VALUE = Integer.MAX_VALUE;
+		
+		//N의 길이
+		int Nlen = String.valueOf(N).length();
+		
+		//확인할 숫자의 길이
+		int len = 0;
+		
+		//각 자리의 값
+		int digitValue = -1; 
+		int digitSum = 0;
+		int constNum = -1;
+		
+		for(int i = N; i > N-(Nlen*9); i--) {
+			len = String.valueOf(N).length();
+			digitSum = 0;
+			
+			while(len > 0) 
+			{
+				char temp =String.valueOf(i).charAt(Nlen-len); 
+				digitValue = temp - '0';								
+				digitSum += digitValue;
+				len--;
+				
+			}
+			if(i + digitSum == N) {
+				constNum = i;
+				
+				if(MIN_VALUE > constNum) {
+					MIN_VALUE = constNum;
+				}
+			}
+			
+			
+		}
+		
+		System.out.println(MIN_VALUE);
+		
+		
+		
+		
+	}
+}
