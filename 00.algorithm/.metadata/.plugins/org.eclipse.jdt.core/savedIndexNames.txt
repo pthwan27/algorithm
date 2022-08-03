@@ -8,7 +8,6 @@ INDEX VERSION 1.131+C:\SSAFY\workspace_algorithm\00.algorithm\.metadata\.plugins
 3336177088.index
 3759197490.index
 137827964.index
-2191482468.index
 2121207378.index
 3359702063.index
 1904871957.index

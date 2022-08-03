@@ -27,30 +27,29 @@ public class D3_1873_상호의배틀필드 {
 		int H = 0;
 		int W = 0;
 
-		// 게임판에 입력될 정보들이 저장될 배열
-
 		// 게임 명령 input 갯수
 		int N = 0;
+
+		// 게임판에 입력될 정보들이 저장될 배열
 		char[] inputArr;
 
 		for (int tc = 1; tc <= T; tc++) {
 			st = new StringTokenizer(in.readLine());
 
-			H = Integer.parseInt(st.nextToken());			
+			H = Integer.parseInt(st.nextToken());
 			W = Integer.parseInt(st.nextToken());
-			
-						
-		gameArr = new char[H][W];
+
+			gameArr = new char[H][W];
 
 			for (int i = 0; i < H; i++) {
 				String inputStr = in.readLine();
 				for (int j = 0; j < W; j++) {
-					//여기서 전차위치 찾아도됌
-					gameArr[i][j] = inputStr.charAt(j);					
+					// 여기서 전차위치 찾아도됌
+					gameArr[i][j] = inputStr.charAt(j);
 				}
 			}
 
-			//전차위치찾기
+			// 전차위치찾기
 			for (int i = 0; i < H; i++) {
 				for (int j = 0; j < W; j++) {
 					if (gameArr[i][j] == '^') {
@@ -76,7 +75,7 @@ public class D3_1873_상호의배틀필드 {
 					}
 				}
 			}
-			
+
 			N = Integer.parseInt(in.readLine());
 			inputArr = new char[N];
 			String inputStr = in.readLine();
@@ -85,10 +84,10 @@ public class D3_1873_상호의배틀필드 {
 				inputArr[i] = inputStr.charAt(i);
 				checkInput(inputArr[i]);
 			}
-		
-			System.out.print("#"+ tc +" ");
-			for(char[] temp : gameArr) {
-			
+
+			System.out.print("#" + tc + " ");
+			for (char[] temp : gameArr) {
+
 				System.out.println(String.valueOf(temp));
 			}
 		}
@@ -98,71 +97,57 @@ public class D3_1873_상호의배틀필드 {
 		switch (c) {
 		case 'U':
 			// 배열 범위 안이고, 평지일때
-            gameArr[startPositionX][startPositionY] = '^';    
+			gameArr[startPositionX][startPositionY] = '^';
+			dir = 1;
 			if (startPositionX - 1 >= 0 && gameArr[startPositionX - 1][startPositionY] == '.') {
 				gameArr[startPositionX][startPositionY] = '.';
 				gameArr[startPositionX - 1][startPositionY] = '^';
 				startPositionX -= 1;
-				dir = 1;
-
-			}
-			// 평지 아닐 때
-			else if (startPositionX - 1 >= 0 && gameArr[startPositionX - 1][startPositionY] != '.') {
-				gameArr[startPositionX][startPositionY] = '^';
-				dir = 1;
 			}
 			break;
 
 		case 'D':
 			// 배열 범위 안이고, 평지일 때
 			gameArr[startPositionX][startPositionY] = 'v';
+			dir = 2;
 			if (startPositionX + 1 < gameArr.length && gameArr[startPositionX + 1][startPositionY] == '.') {
 				gameArr[startPositionX][startPositionY] = '.';
-				gameArr[startPositionX+1][startPositionY] = 'v';
+				gameArr[startPositionX + 1][startPositionY] = 'v';
 				startPositionX += 1;
-				dir = 2;
-
-			}
-			// 평지 아닐 때
-			else if (startPositionX + 1 < gameArr.length && gameArr[startPositionX + 1][startPositionY] != '.') {
-				gameArr[startPositionX][startPositionY] = 'v';
-				dir = 2;
 			}
 			break;
 
-		case 'L':		
+		case 'L':
 			// 배열 범위 안이고, 평지일 때
 			gameArr[startPositionX][startPositionY] = '<';
-			if (startPositionY - 1 >= 0 && gameArr[startPositionX][startPositionY-1] == '.') {
+			dir = 3;
+			if (startPositionY - 1 >= 0 && gameArr[startPositionX][startPositionY - 1] == '.') {
 				gameArr[startPositionX][startPositionY] = '.';
-				gameArr[startPositionX][startPositionY-1] = '<';
+				gameArr[startPositionX][startPositionY - 1] = '<';
 				startPositionY -= 1;
 				dir = 3;
-
 			}
-			// 평지 아닐 때
-			else if (startPositionY - 1 >= 0 && gameArr[startPositionX][startPositionY-1] != '.') {
-				gameArr[startPositionX][startPositionY] = '<';
-				dir = 3;
-			}
-			
 			break;
 
 		case 'R':
 			// 배열 범위 안이고, 평지일 때
-			gameArr[startPositionX][startPositionY] = '>';			
-			if (startPositionY + 1 < gameArr[0].length && gameArr[startPositionX][startPositionY+1] == '.') {
+			gameArr[startPositionX][startPositionY] = '>';
+			dir = 4;
+			if (startPositionY + 1 < gameArr[0].length && gameArr[startPositionX][startPositionY + 1] == '.') {
 				gameArr[startPositionX][startPositionY] = '.';
-				gameArr[startPositionX][startPositionY+1] = '>';				
+				gameArr[startPositionX][startPositionY + 1] = '>';
 				startPositionY += 1;
-				dir = 4;
+			}
 
-			}
-			// 평지 아닐 때
-			else if (startPositionY + 1 < gameArr[0].length && gameArr[startPositionX][startPositionY+1] != '.') {
-				gameArr[startPositionX][startPositionY] = '>';
-				dir = 4;
-			}
+			/*********************************************
+			 * -> 테스트케이스 7개 틀린 이유 : >로 바뀌는 경우만 있어서 발생 -> R이 들어왔을 때 따로 else if로 처리 X -> 방향,
+			 * 머리는 무조건 바뀌는거라 위에서 처리.
+			 ***********************************************/
+//			// 평지 아닐 때
+//			else if (startPositionY + 1 < gameArr[0].length && gameArr[startPositionX][startPositionY+1] != '.') {
+//				gameArr[startPositionX][startPositionY] = '>';
+//				dir = 4;
+//			}
 			break;
 		case 'S':
 			shoot();
@@ -172,83 +157,65 @@ public class D3_1873_상호의배틀필드 {
 
 	private static void shoot() {
 		switch (dir) {
-		case 1:				
-			for(int i = 0; i <= startPositionX; i++) {
-				//범위 밖으로 나가면 break;
-				if(startPositionX - i < 0) {
+		case 1:
+			for (int i = 1; i <= startPositionX; i++) {
+				// 범위 밖으로 나가면 break;
+				if (startPositionX - i < 0) {
 					break;
 				}
-				
-				//벽이 아니면 다음으로 가도록
-				if(gameArr[startPositionX-i][startPositionY] != '*' && gameArr[startPositionX-i][startPositionY] != '#'){
-					continue;					
-				}				
-				else if(gameArr[startPositionX - i][startPositionY] == '*') {
+
+				if (gameArr[startPositionX - i][startPositionY] == '*') {
 					gameArr[startPositionX - i][startPositionY] = '.';
 					break;
-				}
-				else if(gameArr[startPositionX - i][startPositionY] == '#') {
+				} else if (gameArr[startPositionX - i][startPositionY] == '#') {
 					break;
 				}
-				
+
 			}
 			break;
-		case 2:		
-			for(int i = 0; i < gameArr.length-startPositionX; i++) {		
-				if(startPositionX + i >= gameArr.length) {
+		case 2:
+			for (int i = 1; i < gameArr.length - startPositionX; i++) {
+				if (startPositionX + i > gameArr.length) {
 					break;
 				}
-				
-				if(gameArr[startPositionX + i][startPositionY] != '*' && gameArr[startPositionX+ i][startPositionY] != '#'){
-					continue;					
-				}				
-				else if(gameArr[startPositionX + i][startPositionY] == '*') {
+
+				if (gameArr[startPositionX + i][startPositionY] == '*') {
 					gameArr[startPositionX + i][startPositionY] = '.';
 					break;
-				}
-				else if(gameArr[startPositionX + i][startPositionY] == '#') {
+				} else if (gameArr[startPositionX + i][startPositionY] == '#') {
 					break;
 				}
-			
+
 			}
 			break;
-		case 3:	
-			for(int i = 0; i <= startPositionY; i++) {				
-				if(startPositionY - i < 0) {
+		case 3:
+			for (int i = 1; i <= startPositionY; i++) {
+				if (startPositionY - i < 0) {
 					break;
 				}
-				
-				if(gameArr[startPositionX][startPositionY - i] != '*' && gameArr[startPositionX][startPositionY - i] != '#'){
-					continue;					
-				}
-				
-				else if( gameArr[startPositionX][startPositionY- i] == '*') {
-					gameArr[startPositionX][startPositionY-i] = '.';
+
+				if (gameArr[startPositionX][startPositionY - i] == '*') {
+					gameArr[startPositionX][startPositionY - i] = '.';
+					break;
+				} else if (gameArr[startPositionX][startPositionY - i] == '#') {
 					break;
 				}
-				else if(gameArr[startPositionX][startPositionY- i] == '#') {
-					break;
-				}
-			
+
 			}
 			break;
-		case 4:		
-			for(int i = 0; i < gameArr[0].length - startPositionY; i++) {
-				if(startPositionY + i >= gameArr[0].length) {
+		case 4:
+			for (int i = 1; i < gameArr[0].length - startPositionY; i++) {
+				if (startPositionY + i > gameArr[0].length) {
 					break;
 				}
-				
-				if(gameArr[startPositionX][startPositionY + i] != '*' && gameArr[startPositionX][startPositionY + i] != '#'){
-					continue;					
-				}				
-				else if(gameArr[startPositionX][startPositionY + i] == '*') {
+
+				if (gameArr[startPositionX][startPositionY + i] == '*') {
 					gameArr[startPositionX][startPositionY + i] = '.';
 					break;
-				}
-				else if(gameArr[startPositionX][startPositionY + i] == '#') {
+				} else if (gameArr[startPositionX][startPositionY + i] == '#') {
 					break;
 				}
-				
+
 			}
 			break;
 		}
