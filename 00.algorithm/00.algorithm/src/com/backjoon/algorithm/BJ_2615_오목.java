@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * 광주 5반 박태환 5번 문제
  */
-public class Backjoon2615오목 {
+public class BJ_2615_오목 {
 
 	static int dx[] = new int[] { 0, 1, 1, -1 };
 	static int dy[] = new int[] { 1, 0, 1, 1 };

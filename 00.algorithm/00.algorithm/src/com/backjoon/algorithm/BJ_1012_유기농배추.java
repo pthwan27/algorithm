@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Backjoon1012유기농배추 {
+public class BJ_1012_유기농배추 {
 	static StringTokenizer st = null;
 
 	// 가로 세로 크기

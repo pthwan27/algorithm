@@ -2,7 +2,7 @@ package com.backjoon.algorithm;
 
 import java.util.Scanner;
  
-public class Backjoon2798블랙잭 {
+public class BJ_2798_블랙잭 {
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		int N = in.nextInt();

@@ -2,7 +2,7 @@ package com.backjoon.algorithm;
 
 import java.util.Scanner;
 
-public class Backjoon12865 {	
+public class BJ_12865_평범한배낭 {	
 	//준서가 여행에 필요하다 생각하는 물건 N
 	//물건은 무게 W, 가치 V 를 가진다.
 	//해당물건을 배낭에 넣어 가져가면 V만큼 즐길 수 있다.

@@ -2,7 +2,7 @@ package com.backjoon.algorithm;
 
 import java.util.Scanner;
 
-public class Backjoon2447별찍기_temp {
+public class BJ_2447_별찍기_temp {
 	static char[][] arr;
 
 	// 재귀함수를 이용하여 별찍기
