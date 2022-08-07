@@ -11,6 +11,8 @@ public class BJ_1929_소수구하기 {
 	 * @param 박태환 M 이상, N 이하 소수 구하기. M <= X <= N 소수 ? -> 자기 자신으로만 나눠지는 수?
 	 */
 	public static void main(String[] args) throws IOException {
+		 long startTime = System.nanoTime();
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(in.readLine());
 		StringBuilder sb = new StringBuilder();
@@ -18,6 +20,29 @@ public class BJ_1929_소수구하기 {
 		int N = Integer.parseInt(st.nextToken());
 		//입력 끝
 		
+		/*3번 방법.
+		 *  배수를 이용해서 소수인것들 찾기 */
+		boolean [] checkPrime = new boolean[1000000];
+		checkPrime[0] = true;
+		checkPrime[1] = true;
+		//배수들을 true로 처리
+		for(int i = 2; i < N; i++) {
+			for(int j = 2; i*j < checkPrime.length; j++) {
+				checkPrime[i*j] = true;
+			}
+		}
+		
+		//false 인것(소수)만 나오도록
+		for(int i = M; i<= N; i++) {
+			if(checkPrime[i] == false) {
+				sb.append(i+"\n");
+			}
+		}		
+		System.out.println(sb);
+		long endTime = System.nanoTime();
+		 Double elapsedTime = (endTime - startTime) / 1000000.0;
+         System.out.println(elapsedTime);
+		/*시관초과로 실패 한 코드*/
 		/*
 		//소수인 경우에만 출력할 수 있도록 하기 위한 변수
 		boolean check = false;		
@@ -45,6 +70,8 @@ public class BJ_1929_소수구하기 {
 				sb.append(i + "\n");
 			}
 		}
+		
+		
 		** 시 간 초 과 오류 !! **
 		>> stringBuilder 사용		
 		** stringBuilder 사용해도 시간초과오류! **
@@ -98,23 +125,7 @@ public class BJ_1929_소수구하기 {
 		System.out.print(sb);
 		*/
 
-		/*3번 배수를 이용해서 소수인것들 찾기*/
-		boolean [] checkPrime = new boolean[1000000];
-		checkPrime[0] = true;
-		checkPrime[1] = true;
-		//배수들을 true로 처리
-		for(int i = 2; i < N; i++) {
-			for(int j = 2; i*j < checkPrime.length; j++) {
-				checkPrime[i*j] = true;
-			}
-		}
 		
-		//false 인것(소수)만 나오도록
-		for(int i = M; i<= N; i++) {
-			if(checkPrime[i] == false) {
-				System.out.println(i);
-			}
-		}		
 	}
 }
 	
