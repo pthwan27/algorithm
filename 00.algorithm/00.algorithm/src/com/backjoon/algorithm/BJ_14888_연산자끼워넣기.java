@@ -32,7 +32,7 @@ public class BJ_14888_연산자끼워넣기 {
 		for (int index = 0; index < 4; index++) {
 			operCount[index] = Integer.parseInt(st.nextToken());
 		}		
+		//숫자위치 고정 ( 연산자를 돌려가며 계산 ? )
 		
-		System.out.println(5 + operChar[0]);
 	}
 }
