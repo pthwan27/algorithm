@@ -14,7 +14,7 @@ public class BJ_1158_요세푸스문제 {
 	// 1 2 4 5 6 7 -> 3 제거, 3부터 다시 3번째 사람
 	// 1 2 4 5 7 - > 6 제거
 
-	// 원형 연결 리스트 (단방향)
+	//
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		StringBuilder sb = new StringBuilder();
