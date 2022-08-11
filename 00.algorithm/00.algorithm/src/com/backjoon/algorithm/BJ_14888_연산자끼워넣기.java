@@ -22,17 +22,46 @@ public class BJ_14888_연산자끼워넣기 {
 
 		// 숫자들 입력받기.
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-		for (int index = 0; index < N; index++) {
-			numArr[index] = Integer.parseInt(st.nextToken());
+		for (int idx = 0; idx < N; idx++) {
+			numArr[idx] = Integer.parseInt(st.nextToken());
 		}
 
 		// 연산자의 갯수 카운팅( 덧셈, 뺄셈, 곱셈, 나눗셈 )
-		int[] operCount = new int[4];
+		int[] operCountArr = new int[4];
 		st = new StringTokenizer(br.readLine(), " ");
-		for (int index = 0; index < 4; index++) {
-			operCount[index] = Integer.parseInt(st.nextToken());
+		
+		//count 연산자 있는 것 만큼 카운팅하기 위해 생성
+		int operCnt = 0; 
+		for (int idx = 0; idx < 4; idx++) {			
+			operCnt += operCountArr[idx] = Integer.parseInt(st.nextToken());			
 		}		
-		//숫자위치 고정 ( 연산자를 돌려가며 계산 ? )
+		
+		char[] operCharArr = new char[operCnt];
+		
+		int count = 0;
+		for(int idx = 0; idx < 4; idx++) {
+			while(operCountArr[idx]-- > 0) {
+				switch (idx) {
+				case 0:
+					operCharArr[count++] = '+';
+					break;
+				case 1:
+					operCharArr[count++] = '-';
+					break;
+				case 2:
+					operCharArr[count++] = '*';
+					break;
+				case 3:
+					operCharArr[count++] = '/';
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		
+		//연산자의 순열을 만들고, 이를 활용해 계산해보기
+		//숫자위치 고정 ( 연산자를 돌려가며 계산 해보기 )
 		
 	}
 }

@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
 org.eclipse.debug.core.USE_STEP_FILTERS=true
-prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<watchExpressions>\r\n<expression enabled\="true" text\="InCard"/>\r\n<expression enabled\="true" text\="GyuCard"/>\r\n<expression enabled\="true" text\="changedCard"/>\r\n<expression enabled\="true" text\="InCard"/>\r\n<expression enabled\="true" text\="isSelected"/>\r\n</watchExpressions>\r\n
+prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<watchExpressions>\r\n<expression enabled\="true" text\=" Math.abs(SumS - SumB)"/>\r\n<expression enabled\="true" text\="calc()"/>\r\n</watchExpressions>\r\n

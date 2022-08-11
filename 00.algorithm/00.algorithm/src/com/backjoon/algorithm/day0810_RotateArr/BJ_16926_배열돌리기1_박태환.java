@@ -1,4 +1,4 @@
-package com.backjoon.algorithm;
+package com.backjoon.algorithm.day0810_RotateArr;
 
 import java.io.BufferedReader;
 import java.io.IOException;

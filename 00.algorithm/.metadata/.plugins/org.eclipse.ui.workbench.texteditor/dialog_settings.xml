@@ -6,25 +6,32 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="sqrt" key="selection"/>
+		<item value="int" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="result"/>
-			<item value="StartNum"/>
-			<item value="sqrt"/>
-			<item value="topHeight"/>
-			<item value="dnaA"/>
-			<item value="N"/>
-			<item value="10"/>
-			<item value="100"/>
-			<item value="stdGen"/>
-			<item value="switchArr"/>
-			<item value="changeChar"/>
+			<item value="cur"/>
+			<item value="int"/>
+			<item value="-1"/>
+			<item value="char"/>
+			<item value="left"/>
+			<item value="도영"/>
+			<item value="rotate"/>
+			<item value="println"/>
+			<item value="sout"/>
+			<item value="\n"/>
+			<item value="&quot;\n&quot;"/>
+			<item value="MinLineSum"/>
+			<item value="solve"/>
+			<item value="BackUparea"/>
+			<item value="rcsarr"/>
 		</list>
 		<list key="replacehistory">
+			<item value="char"/>
+			<item value="&apos;.&apos;"/>
+			<item value="right"/>
 			<item value="sqrtNum"/>
 			<item value="4"/>
 			<item value="100"/>
@@ -35,7 +42,7 @@
 		<item value="340" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="454" key="DIALOG_HEIGHT"/>
-		<item value="799" key="DIALOG_X_ORIGIN"/>
-		<item value="247" key="DIALOG_Y_ORIGIN"/>
+		<item value="1171" key="DIALOG_X_ORIGIN"/>
+		<item value="238" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
