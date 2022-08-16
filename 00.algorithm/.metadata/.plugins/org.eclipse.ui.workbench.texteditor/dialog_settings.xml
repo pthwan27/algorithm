@@ -6,12 +6,14 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="int" key="selection"/>
+		<item value="int[]" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="permNums"/>
+			<item value="String"/>
 			<item value="cur"/>
 			<item value="int"/>
 			<item value="-1"/>
@@ -25,10 +27,9 @@
 			<item value="&quot;\n&quot;"/>
 			<item value="MinLineSum"/>
 			<item value="solve"/>
-			<item value="BackUparea"/>
-			<item value="rcsarr"/>
 		</list>
 		<list key="replacehistory">
+			<item value="int[]"/>
 			<item value="char"/>
 			<item value="&apos;.&apos;"/>
 			<item value="right"/>

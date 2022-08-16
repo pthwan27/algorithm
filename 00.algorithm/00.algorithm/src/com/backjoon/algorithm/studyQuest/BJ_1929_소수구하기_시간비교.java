@@ -1,4 +1,4 @@
-package com.backjoon.algorithm;
+package com.backjoon.algorithm.studyQuest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
