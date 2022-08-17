@@ -1,4 +1,4 @@
-package com.backjoon.algorithm.day0816;
+package com.backjoon.algorithm.week0816;
 
 import java.io.BufferedReader;
 import java.io.IOException;
