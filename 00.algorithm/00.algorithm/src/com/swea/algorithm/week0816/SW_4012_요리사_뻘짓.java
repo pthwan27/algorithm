@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class SW_4012_요리사 {
+public class SW_4012_요리사_뻘짓 {
 
 	static int N;
 

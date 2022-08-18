@@ -5,30 +5,32 @@
 		<item value="387" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item value="false" key="isRegEx"/>
-		<item value="int[]" key="selection"/>
+		<item value="true" key="isRegEx"/>
+		<item value="IsSelectedMap" key="selection"/>
 		<item value="false" key="casesensitive"/>
-		<item value="false" key="incremental"/>
+		<item value="true" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="IsSelectedMap"/>
+			<item value="Address"/>
+			<item value="customerList"/>
+			<item value="result"/>
+			<item value="copyMap"/>
+			<item value="pipeMap"/>
+			<item value="isChecked"/>
+			<item value="N"/>
+			<item value="max"/>
+			<item value="ln"/>
 			<item value="permNums"/>
 			<item value="String"/>
 			<item value="cur"/>
 			<item value="int"/>
 			<item value="-1"/>
-			<item value="char"/>
-			<item value="left"/>
-			<item value="도영"/>
-			<item value="rotate"/>
-			<item value="println"/>
-			<item value="sout"/>
-			<item value="\n"/>
-			<item value="&quot;\n&quot;"/>
-			<item value="MinLineSum"/>
-			<item value="solve"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Adr"/>
+			<item value="size*2"/>
 			<item value="int[]"/>
 			<item value="char"/>
 			<item value="&apos;.&apos;"/>

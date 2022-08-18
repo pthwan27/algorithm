@@ -1,4 +1,4 @@
-package hwalgo12_광주_5반_박태환;
+package hwalgo14_광주_5반_박태환;
 
 import java.io.BufferedReader;
 import java.io.IOException;
