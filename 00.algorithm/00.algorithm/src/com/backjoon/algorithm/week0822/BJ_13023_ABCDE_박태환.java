@@ -1,4 +1,4 @@
-package com.backjoon.algorithm.temp0823;
+package com.backjoon.algorithm.week0822;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class BJ_13023_ABCDE {
+public class BJ_13023_ABCDE_박태환 {
 	static ArrayList<Integer>[] graph;
 	static boolean[] isChecked;
 

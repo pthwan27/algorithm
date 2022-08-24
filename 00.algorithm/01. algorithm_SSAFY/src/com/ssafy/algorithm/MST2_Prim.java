@@ -1,4 +1,4 @@
-package com.backjoon.algorithm.temp0823;
+package com.ssafy.algorithm;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
