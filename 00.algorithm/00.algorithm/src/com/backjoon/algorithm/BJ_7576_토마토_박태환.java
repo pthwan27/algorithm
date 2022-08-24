@@ -22,7 +22,7 @@ class Tomato {
 	}
 }
 
-public class BJ_7576_토마토 {
+public class BJ_7576_토마토_박태환 {
 
 	// 배열의 크기가 주어진다.
 	// 1 익은 토마토, 0은 안익은 토마토, -1은 빈 곳
