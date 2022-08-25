@@ -21,7 +21,6 @@ class Robot {
 	public String toString() {
 		return "Robot [r=" + r + ",c=" + c + ", dir=" + dir + "]";
 	}
-
 }
 
 class Command {
@@ -97,9 +96,6 @@ public class BJ_2174_로봇시뮬레이션 {
 		simulation();
 	}
 
-	// 상, 우, 하, 좌
-	static int[] dr = { -1, 0, 1, 0 };
-	static int[] dc = { 0, 1, 0, -1 };
 
 	private static void simulation() {
 		boolean outCheck = true; //게임이 끝나면 -> 오류 발생시 나가도록
@@ -118,6 +114,9 @@ public class BJ_2174_로봇시뮬레이션 {
 			int goR = robotList.get(target-1).r;
 			int goC = robotList.get(target-1).c;
 
+			// 상, 우, 하, 좌
+			final int[] dr = { -1, 0, 1, 0 };
+			final int[] dc = { 0, 1, 0, -1 };
 
 			// 명령의 반복 횟수만큼 명령을 수행한다, outCheck를 통해 오류 메시지가 발생하면 이후 검사 X
 			for (int b = CommandList.get(a).repeatNum; b > 0 && outCheck; b--) {
@@ -131,7 +130,7 @@ public class BJ_2174_로봇시뮬레이션 {
 					}
 
 					break;
-				case 'R':
+				case 'R': 
 					if (dir == 3) {
 						dir = 0;
 					} else {
@@ -182,8 +181,10 @@ public class BJ_2174_로봇시뮬레이션 {
 				}
 				
 				//맵에 저장해둔 로봇의 위치를 바꿔준다.
+				//로봇의 원래 위치 -> 0
 				robotMap[robotList.get(target-1).r][robotList.get(target-1).c] = 0;
 				robotList.set(target - 1, new Robot(goR, goC, temp));
+				//로봇의 바뀐 위치 표시
 				robotMap[goR][goC] = target;
 			}
 		}
