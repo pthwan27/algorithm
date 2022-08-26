@@ -53,7 +53,7 @@ public class BJ_1753_최단경로_박태환 {
 		}
 
 		int[] D = new int[V + 1]; // 출발지에서 자신으로 오는데 소요되는 최소 비용 저장
-
+		
 		Arrays.fill(D, Integer.MAX_VALUE);
 		//출발지는 0으로 세팅
 		D[K] = 0;
@@ -64,7 +64,6 @@ public class BJ_1753_최단경로_박태환 {
 		while (!pQueue.isEmpty()) {
 			Node curNode = pQueue.poll();
 			int to = curNode.to;		
-			
 			for (Node temp : graph[to]) {
 				//다음칸의 최소길이보다  현재까지의 길이 + 현재부터 다음노드까지의 길이가 작으면
 				//값 갱신
@@ -75,13 +74,15 @@ public class BJ_1753_최단경로_박태환 {
 			}
 		}
 
+		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < D.length; i++) {
 			if (D[i] < Integer.MAX_VALUE) {
-				System.out.println(D[i]);
+				sb.append(D[i]).append("\n");
 			} else {
-				System.out.println("INF");
+				sb.append("INF").append("\n");
 			}
 		}
 
+		System.out.println(sb);
 	}
 }
