@@ -22,7 +22,7 @@ public class PermutationBitMaskingTest {
 		perm(0, 0);
 		System.out.println("총 경우의 수 : " + totalCnt);
 	}
-//cnt : 직전짜기 뽑은 순엻에 포함된 수의 개수, cnt+1 번째 해당하는 순열에 포함될 수를 뽑기
+	//cnt : 직전짜기 뽑은 순엻에 포함된 수의 개수, cnt+1 번째 해당하는 순열에 포함될 수를 뽑기
 	// falg : 선택된 수들의 상태를 비트로 표현하고 있는 비트열
 	private static void perm(int cnt, int flag) {
 		if(cnt == R) {
