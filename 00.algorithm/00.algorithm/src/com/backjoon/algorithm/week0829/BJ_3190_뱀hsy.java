@@ -1,4 +1,4 @@
-package com.ssafy.algorithm;
+package com.backjoon.algorithm.week0829;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BJ_3190_뱀hsy {
 	static int[] dx = { 0, 1, 0, -1 };
 	static int[] dy = { 1, 0, -1, 0 };
 	static int time;

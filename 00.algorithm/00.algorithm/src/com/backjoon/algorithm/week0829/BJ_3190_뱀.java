@@ -1,4 +1,4 @@
-package com.backjoon.algorithm;
+package com.backjoon.algorithm.week0829;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,6 @@ public class BJ_3190_뱀 {
 			this.c = c;
 		}
 	}
-
 	// 보드 크기, 사과 개수
 	static int N;
 	static int K;
@@ -26,7 +25,7 @@ public class BJ_3190_뱀 {
 	// 보드 = 맵
 	static int[][] map;
 
-	// 뱀 표시
+	// 뱀 정보 큐
 	static Deque<Snake> snakeQueue;
 
 	// 언제 , 어느방향으로 바뀔지 담아두기 위한 큐
@@ -67,7 +66,6 @@ public class BJ_3190_뱀 {
 			} else {
 				dir = 1;
 			}
-
 			changeTimeQueue.add(time);
 			changeDirQueue.add(dir);
 		}
@@ -94,21 +92,16 @@ public class BJ_3190_뱀 {
 		// 시간초 카운트
 		int count = 1;
 		// 다음 방향이 바뀌는 시간
-		int nextTime = changeTimeQueue.poll();
+		int nextTime = changeTimeQueue.poll();		
+		
 		// 맵을 나가지않고, 자기자신을 만나지 않을 때(1이 아닐때 == 뱀이 아닐 때)까지 반복
-		while (isIn(dr, dc)) {
-
-			// 다음 칸이 사과 인 경우 -> 다음 칸만 1로 바꾸고, 사이즈를 늘린다. -> 꼬리위치는 고정, 머리만 한 칸 늘어남.
-			// 다음 칸이 사과가 아닌 경우 -> 뱀만 움직인다. -> 꼬리, 머리
-			if (map[dr][dc] == 9) {
-				// 머리를 다음칸에 넣고
+		while (isIn(dr, dc)) {			
+			// 머리를 다음칸에 넣고
+			if (map[dr][dc] == 9) { //다음칸이 사과면 -> 꼬리는 그대로.
 				map[dr][dc] = 1;
 				snakeQueue.offerFirst(new Snake(dr, dc));
-
-			} else {
-				// 머리를 다음칸에 넣고
+			} else { //꼬리쪽(큐 끝부분 하나 삭제)
 				map[dr][dc] = 1;
-				// 꼬리 위치를 0으로 바꾸고
 				Snake tempSnake = snakeQueue.pollLast();
 				map[tempSnake.r][tempSnake.c] = 0;
 
