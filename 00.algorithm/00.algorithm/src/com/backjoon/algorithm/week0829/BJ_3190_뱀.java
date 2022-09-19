@@ -49,13 +49,16 @@ public class BJ_3190_뱀 {
 
 			map[r][c] = 9;
 		}
-
+		// 현재 뱀 위치
+		map[1][1] = 1;
+		
 		int L = Integer.parseInt(in.readLine());
 
 		changeTimeQueue = new LinkedList<>();
 		changeDirQueue = new LinkedList<>();
 
 		changeDirQueue.add(0); //맨 처음은 오른쪽 방향이기 때문에 따로 추가함
+		
 		for (int i = 0; i < L; i++) {
 			st = new StringTokenizer(in.readLine());
 			int time = Integer.parseInt(st.nextToken());
@@ -71,9 +74,7 @@ public class BJ_3190_뱀 {
 		}
 		snakeQueue = new LinkedList<>();
 		snakeQueue.offer(new Snake(1, 1));
-
-		// 현재 뱀 위치
-		map[1][1] = 1;
+	
 		moveSnake();
 	}
 
