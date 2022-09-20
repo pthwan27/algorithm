@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class BJ_1584_게임 {
+public class BJ_1584_게임_실패버전 {
 	static class Node implements Comparable<Node> {
 		int r, c, count;
 
@@ -24,6 +24,7 @@ public class BJ_1584_게임 {
 			else
 				return -1;
 		}
+
 	}
 
 	static int[][] map = new int[501][501];
@@ -91,29 +92,33 @@ public class BJ_1584_게임 {
 		isSelected[0][0] = true;
 
 		while (!bfsQueue.isEmpty()) {
-			Node tempNode = bfsQueue.poll();
+			int size = bfsQueue.size();
+			for (int t = 0; t < size; t++) {
+				Node tempNode = bfsQueue.poll();
 
-			int r = tempNode.r;
-			int c = tempNode.c;
-			int cnt = tempNode.count;
+				int r = tempNode.r;
+				int c = tempNode.c;
+				int cnt = tempNode.count;
 
-			if (r == 500 && c == 500) {
-				minResult = Math.min(cnt, minResult);
-			}
+				if (r == 500 && c == 500) {
+					minResult = Math.min(cnt, minResult);
+				}
 
-			for (int i = 0; i < 4; i++) {
-				int dr = r + dx[i];
-				int dc = c + dy[i];
+				for (int i = 0; i < 4; i++) {
+					int dr = r + dx[i];
+					int dc = c + dy[i];
 
-				if (isIn(dr, dc)) {
-					if (isSelected[dr][dc])
-						continue;
+					if (isIn(dr, dc)) {
+						if (isSelected[dr][dc])
+							continue;
 
-					isSelected[dr][dc] = true;
-					bfsQueue.add(new Node(dr, dc, cnt + map[dr][dc]));
+						isSelected[dr][dc] = true;
+						bfsQueue.add(new Node(dr, dc, cnt + map[dr][dc]));
+					}
 				}
 			}
 		}
+
 	}
 
 	private static boolean isIn(int dr, int dc) {
@@ -124,16 +129,31 @@ public class BJ_1584_게임 {
 	}
 
 	private static void makeRange(int x1, int x2, int y1, int y2, int status) {
-		int startX = Math.min(x1, x2);
-		int endX = Math.max(x1, x2);
-
-		int startY = Math.min(y1, y2);
-		int endY = Math.max(y1, y2);
-
-		for (int r = startX; r <= endX; r++) {
-			for (int c = startY; c <= endY; c++) {
-				map[r][c] = status;
+		if (x1 < x2 && y1 < y2) {
+			for (int r = x1; r <= x2; r++) {
+				for (int c = y1; c <= y2; c++) {
+					map[r][c] = status;
+				}
+			}
+		} else if (x1 < x2 && y1 > y2) {
+			for (int r = x1; r <= x2; r++) {
+				for (int c = y2; c <= y1; c++) {
+					map[r][c] = status;
+				}
+			}
+		} else if (x1 > x2 && y1 < y2) {
+			for (int r = x2; r <= x1; r++) {
+				for (int c = y1; c <= y2; c++) {
+					map[r][c] = status;
+				}
+			}
+		} else if (x1 > x2 && y1 > y2) {
+			for (int r = x2; r <= x1; r++) {
+				for (int c = y2; c <= y1; c++) {
+					map[r][c] = status;
+				}
 			}
 		}
+
 	}
 }
