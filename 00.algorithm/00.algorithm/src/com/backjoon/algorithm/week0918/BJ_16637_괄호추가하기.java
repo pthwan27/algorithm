@@ -49,7 +49,7 @@ public class BJ_16637_괄호추가하기 {
 		dfs(cur+1, sum);
 		
 		//괄호칠때 (괄호보다 숫자가 하나 더 많기 때문에, 
-		// ☆★  cur+1 < operList.size()를 하면 마지막 숫자까지 괄호 칠 수 있다
+		// cur+1 < operList.size()를 하면 마지막 숫자까지 괄호 칠 수 있다
 		if(cur+1 < operList.size()) {
 			int bracketSum = calc(numList.get(cur+1), operList.get(cur+1),numList.get(cur+2));
 //			System.out.println("bracketSum" + bracketSum);
