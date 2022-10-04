@@ -32,10 +32,11 @@ public class BJ_1584_게임 {
 	static int minResult = Integer.MAX_VALUE;
 
 	public static void main(String[] args) throws IOException {
-
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-
+		
+		// 입력 부분
+		// 위험 구역 설정
 		int N = Integer.parseInt(in.readLine());
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(in.readLine());
@@ -48,8 +49,9 @@ public class BJ_1584_게임 {
 			makeRange(x1, x2, y1, y2, 1);
 		}
 
+		
+		// 죽음구역 설정
 		int M = Integer.parseInt(in.readLine());
-
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(in.readLine());
 			int x1 = Integer.parseInt(st.nextToken());
@@ -61,24 +63,13 @@ public class BJ_1584_게임 {
 			makeRange(x1, x2, y1, y2, 9);
 		}
 
-//		printMap(map);
-
 		bfs();
+		
 		if (minResult == Integer.MAX_VALUE) {
 			minResult = -1;
 		}
 		System.out.println(minResult);
 	}
-
-//	private static void printMap(int[][] map2) {
-//		for (int i = 0; i < 500; i++) {
-//			for (int j = 0; j < 500; j++) {
-//				System.out.print(map[i][j]);
-//			}
-//			System.out.println();
-//		}
-//
-//	}
 
 	private static void bfs() {
 		// 시계방향
