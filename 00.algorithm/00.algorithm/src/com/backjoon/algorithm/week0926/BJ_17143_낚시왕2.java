@@ -3,16 +3,22 @@ package com.backjoon.algorithm.week0926;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class BJ_17143_낚시왕 {
+public class BJ_17143_낚시왕2 {
 	static class Shark {
 		// 위치, 속력, 방향, 크기
+		int idx;
 		int r, c, speed, d, size;
 
-		public Shark(int r, int c, int speed, int d, int size) {
+		public Shark(int idx, int r, int c, int speed, int d, int size) {
 
 			super();
+			this.idx = idx;
 			this.r = r;
 			this.c = c;
 			this.speed = speed;
@@ -22,7 +28,8 @@ public class BJ_17143_낚시왕 {
 
 		@Override
 		public String toString() {
-			return "Shark [r=" + r + ", c=" + c + ", speed=" + speed + ", d=" + d + ", size=" + size + "]";
+			return "Shark [idx=" + idx + ", r=" + r + ", c=" + c + ", speed=" + speed + ", d=" + d + ", size=" + size
+					+ "]";
 		}
 	}
 
@@ -31,7 +38,7 @@ public class BJ_17143_낚시왕 {
 
 	static int[][] map;
 
-	static Shark[] sharkArr;
+	static ArrayList<Shark> sharkList;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -43,7 +50,7 @@ public class BJ_17143_낚시왕 {
 		M = Integer.parseInt(st.nextToken());
 
 		map = new int[R + 1][C + 1];
-		sharkArr = new Shark[M + 1];
+		sharkList = new ArrayList<>();
 		for (int idx = 1; idx <= M; idx++) {
 			st = new StringTokenizer(in.readLine());
 
@@ -57,7 +64,7 @@ public class BJ_17143_낚시왕 {
 
 			map[r][c] = idx;
 
-			sharkArr[idx] = new Shark(r, c, speed, d, size);
+			sharkList.add(new Shark(idx, r, c, speed, d, size));
 		}
 
 		System.out.println(solution());
@@ -65,15 +72,14 @@ public class BJ_17143_낚시왕 {
 
 	private static int solution() {
 		int sum = 0;
-		//낚시꾼 왼쪽 열부터 ~ 
 		for (int c = 1; c <= C; c++) {
 			for (int r = 1; r <= R; r++) {
-				if (sharkArr[map[r][c]] == null)
-					continue;
-
 				if (map[r][c] > 0) {
-					sum += sharkArr[map[r][c]].size;
-					sharkArr[map[r][c]] = null;
+					if (sharkList.get(map[r][c] - 1) == null)
+						continue;
+
+					sum += sharkList.get(map[r][c] - 1).size;
+					sharkList.set(map[r][c] - 1, null);
 					break;
 				}
 			}
@@ -89,79 +95,82 @@ public class BJ_17143_낚시왕 {
 
 		int[][] newMap = new int[R + 1][C + 1];
 
-		for (int idx = 1; idx < sharkArr.length; idx++) {
-			if (sharkArr[idx] == null)
+		for (int idx = 0; idx < sharkList.size(); idx++) {
+			if (sharkList.get(idx) == null)
 				continue;
 
-			Shark nowShark = sharkArr[idx];
+			Shark pollShark = sharkList.get(idx);
 
-			int nowR = nowShark.r;
-			int nowC = nowShark.c;
-			int nowSpeed = nowShark.speed;
-			int nowD = nowShark.d;
-			int nowSize = nowShark.size;
+			int pollIdx = pollShark.idx;
 
-			int dr = nowR;
-			int dc = nowC;
+			int pollR = pollShark.r;
+			int pollC = pollShark.c;
+			int pollSpeed = pollShark.speed;
+			int pollD = pollShark.d;
+			int pollSize = pollShark.size;
+
+			int dr = pollR;
+			int dc = pollC;
 
 			int moveCnt;
 			// 1, 2 상하
-			if (nowD == 1 || nowD == 2) {
-				moveCnt = nowSpeed % ((R - 1) * 2);
+			if (pollD == 1 || pollD == 2) {
+				moveCnt = pollSpeed % ((R - 1) * 2);
 				for (int i = 0; i < moveCnt; i++) {
-					if (isInR(dr + dArr[nowD][0])) {
-						nowD = changeD(nowD);
+					if (isInR(dr + dArr[pollD][0])) {
+						pollD = changeD(pollD);
 					}
-					dr += dArr[nowD][0];
-					dc += dArr[nowD][1];
+					dr += dArr[pollD][0];
+					dc += dArr[pollD][1];
 				}
 			}
 			// 3, 4 우좌
 			else {
-				moveCnt = nowSpeed % ((C - 1) * 2);
+				moveCnt = pollSpeed % ((C - 1) * 2);
 				for (int i = 0; i < moveCnt; i++) {
-					if (isInC(dc + dArr[nowD][1])) {
-						nowD = changeD(nowD);
+					if (isInC(dc + dArr[pollD][1])) {
+						pollD = changeD(pollD);
 					}
-					dr += dArr[nowD][0];
-					dc += dArr[nowD][1];
+					dr += dArr[pollD][0];
+					dc += dArr[pollD][1];
 				}
 			}
 
-			//맵에 이미 박혀있는 상어
-			int preSharkIdx = newMap[dr][dc];
+			int preSharkIdx = 0;
+			int newSharkIdx = 0;
 
 			if (newMap[dr][dc] > 0) {
-				if (sharkArr[preSharkIdx].size > sharkArr[idx].size) {
-					// newMap[sharkArr[idx].r][sharkArr[idx].c] = 0; <<
-					sharkArr[idx] = null;
-				} else {
-					sharkArr[preSharkIdx] = null;
-					sharkArr[idx] = new Shark(dr, dc, nowSpeed, nowD, nowSize);
+				preSharkIdx = newMap[dr][dc] - 1;
+				newSharkIdx = sharkList.get(pollIdx-1).idx - 1;
 
-					newMap[dr][dc] = idx;
+				//여기
+				if (sharkList.get(preSharkIdx).size > sharkList.get(newSharkIdx).size) {
+					sharkList.set(newSharkIdx, sharkList.get(preSharkIdx));
+
+					newMap[dr][dc] = sharkList.get(preSharkIdx).idx;
+				} else {
+					sharkList.set(preSharkIdx, sharkList.get(newSharkIdx));
+
+					newMap[dr][dc] = sharkList.get(newSharkIdx).idx;
 				}
 			}
 
 			// 상어 없을 때
 			else {
-				sharkArr[preSharkIdx] = null;
-				sharkArr[idx] = new Shark(dr, dc, nowSpeed, nowD, nowSize);
-				newMap[dr][dc] = idx;
+				sharkList.set(pollIdx-1, new Shark(pollIdx, dr, dc, pollSpeed, pollD, pollSize));
+				newMap[dr][dc] = pollIdx;
 			}
 		}
+		saveMap(newMap);
+	}
 
-		/*
-		 * debug for (int i = 1; i < newMap.length; i++) { for (int j = 1; j <
-		 * newMap[i].length; j++) { if (sharkArr[newMap[i][j]] == null)
-		 * System.out.print(0 + " "); else {
-		 * System.out.print(sharkArr[newMap[i][j]].size + " "); } }
-		 * System.out.println(); }
-		 * 
-		 * System.out.println("--------------------------");
-		 */
-
-		map = newMap;
+	private static void saveMap(int[][] newMap) {
+		for (int r = 1; r <= R; r++) {
+			for (int c = 1; c <= C; c++) {
+				map[r][c] = 0;
+				map[r][c] = newMap[r][c];
+			}
+		}
 	}
 
 	private static int changeD(int pollD) {

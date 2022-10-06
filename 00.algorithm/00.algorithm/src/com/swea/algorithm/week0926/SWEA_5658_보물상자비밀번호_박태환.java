@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class SWEA_5658_보물상자비밀번호 {
+public class SWEA_5658_보물상자비밀번호_박태환 {
 	static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 	static Deque<Character> deque;
@@ -35,6 +35,7 @@ public class SWEA_5658_보물상자비밀번호 {
 			}
 			//입력 끝
 
+			//4배수로 주기 때문에 4개로 나눠지도록 함
 			int cycle = N / 4;
 			while (cycle-- > 0) {
 				int size = deque.size();

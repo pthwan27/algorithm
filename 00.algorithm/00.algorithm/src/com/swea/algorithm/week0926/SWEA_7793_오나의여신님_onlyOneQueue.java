@@ -3,28 +3,21 @@ package com.swea.algorithm.week0926;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class SWEA_7793_오나의여신님 {
+public class SWEA_7793_오나의여신님_onlyOneQueue {
 	static class Node {
 		int r, c;
+		char state;
 
-		public Node(int r, int c) {
+		public Node(int r, int c, char state) {
 			super();
 			this.r = r;
 			this.c = c;
-		}
-	}
-
-	static class Dist {
-		int r, c;
-
-		public Dist(int r, int c) {
-			super();
-			this.r = r;
-			this.c = c;
+			this.state = state;
 		}
 	}
 
@@ -35,11 +28,10 @@ public class SWEA_7793_오나의여신님 {
 	static boolean[][] isDistVisited;
 
 	static Node heroNode;
-	static Dist dist;
 
 	static int result;
 
-	static Queue<Dist> distQueue;
+	static Deque<Node> bfsQueue;
 
 	static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	static StringBuilder sb = new StringBuilder();
@@ -54,27 +46,19 @@ public class SWEA_7793_오나의여신님 {
 
 			map = new char[N][M];
 			isVisited = new boolean[N][M];
-			isDistVisited = new boolean[N][M];
 
-			distQueue = new LinkedList<>();
-
+			bfsQueue = new LinkedList<>();
 			for (int r = 0; r < N; r++) {
 				String inputStr = in.readLine();
 				for (int c = 0; c < M; c++) {
 					map[r][c] = inputStr.charAt(c);
 
 					if (map[r][c] == '*') {
-						dist = new Dist(r, c);
-						distQueue.offer(dist);
+						bfsQueue.addFirst(new Node(r, c, '*'));
 					}
 
 					else if (map[r][c] == 'S') {
-						heroNode = new Node(r, c);
-						isVisited[r][c] = true;
-					}
-
-					else if (map[r][c] == 'X') {
-						isVisited[r][c] = true;
+						bfsQueue.addLast(new Node(r, c, 'S'));
 					}
 				}
 			}
@@ -99,55 +83,42 @@ public class SWEA_7793_오나의여신님 {
 	static int[][] dArr = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
 
 	private static int bfs() {
-		Queue<Node> queue = new LinkedList<>();
+		int count = 1; //몇초에 도착했는지 확인하기 위한 메서드
 
-		queue.offer(heroNode);
-
-		int count = 0; //몇초에 도착했는지 확인하기 위한 메서드
-
-		while (!queue.isEmpty()) {
+		while (true) {
 			//악마의 손아귀 범위 확장
-			int distQsize = distQueue.size();
-
+			int distQsize = bfsQueue.size();
+			int newS = 0;
 			while (distQsize-- > 0) {
-				Dist pollDist = distQueue.poll();
-
-				int r = pollDist.r;
-				int c = pollDist.c;
-
-				for (int i = 0; i < 4; i++) {
-					int dr = r + dArr[i][0];
-					int dc = c + dArr[i][1];
-
-					if (isInDist(dr, dc) && !isDistVisited[dr][dc]) {
-						isDistVisited[dr][dc] = true;
-						map[dr][dc] = '*';
-						distQueue.offer(new Dist(dr, dc));
-					}
-				}
-			}
-
-			int size = queue.size();
-
-			while (size-- > 0) {
-				Node pollNode = queue.poll();
+				Node pollNode = bfsQueue.poll();
 
 				int r = pollNode.r;
 				int c = pollNode.c;
-
-				if (map[r][c] == 'D') {
-					return count;
-				}
+				char state = pollNode.state;
 
 				for (int i = 0; i < 4; i++) {
 					int dr = r + dArr[i][0];
 					int dc = c + dArr[i][1];
+					if (isIn(dr, dc)) {
+						if (state == '*' && (map[dr][dc] == '.' || map[dr][dc] == 'S')) {
+							map[dr][dc] = '*';
+							bfsQueue.offer(new Node(dr, dc, '*'));
+						}
 
-					if (isIn(dr, dc) && !isVisited[dr][dc]) {
-						isVisited[dr][dc] = true;
-						queue.add(new Node(dr, dc));
+						else if (state == 'S') {
+							if (map[dr][dc] == '.') {
+								map[dr][dc] = 'S';
+								bfsQueue.offer(new Node(dr, dc, 'S'));
+								newS++;
+							} else if (map[dr][dc] == 'D') {
+								return count;
+							}
+						}
 					}
 				}
+			}
+			if (newS == 0) {
+				break;
 			}
 			count++;
 		}
@@ -155,10 +126,6 @@ public class SWEA_7793_오나의여신님 {
 	}
 
 	private static boolean isIn(int dr, int dc) {
-		return dr >= 0 && dc >= 0 && dr < N && dc < M && map[dr][dc] != '*' && map[dr][dc] != 'X';
-	}
-
-	private static boolean isInDist(int dr, int dc) {
-		return dr >= 0 && dc >= 0 && dr < N && dc < M && map[dr][dc] != 'D' && map[dr][dc] != 'X' && map[dr][dc] != '*';
+		return dr >= 0 && dc >= 0 && dr < N && dc < M;
 	}
 }
