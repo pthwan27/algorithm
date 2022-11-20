@@ -87,6 +87,7 @@ public class SW_2115_벌꿀채취 {
 				}
 			}
 
+			//한 통의 최대 값 구해놓기.
 			for (int i = 0; i < honeySumList.size(); i++) {
 				if (honeySumList.get(i).sum > C) {
 					int r, c, sum, maxbenefit;
@@ -116,6 +117,7 @@ public class SW_2115_벌꿀채취 {
 
 	static int maxbenefit = 0;
 
+	//maxBenefit -> 한 꿀통에서 나올 수있는 최대 값 찾기
 	private static int maxBenefit(HoneySum honeySum) {
 		HoneySum A = honeySum;
 		maxbenefit = 0;
@@ -149,6 +151,7 @@ public class SW_2115_벌꿀채취 {
 
 	}
 
+	//꿀통 비교하면서, 두개의 합이 가장 큰 것 찾기
 	private static void comb(int cur, int start, int[] nums) {
 		if (cur == 2) {
 			//두개의 꿀통 비교하면서 찾기

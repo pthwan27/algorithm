@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class SW_1949_등산로조성 {
+public class SW_1949_등산로조성_BFS {
 	static class Point {
 		int r, c, chance, dis, map[][];
 		boolean[][] isSelected;

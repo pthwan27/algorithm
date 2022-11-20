@@ -103,7 +103,6 @@ public class BJ_16236_아기상어2 {
 					if (isIn(goR, goC) && !isSelected[goR][goC] && map[goR][goC] <= size) {
 						// 방문체크
 						isSelected[goR][goC] = true;
-
 						if (map[goR][goC] != 0 && map[goR][goC] < size) {
 							if (countCheck == true) { // 먹을 수 있는 물고기가 2개 이상일때
 								if (minCnt > cnt) { // 거리가 같을 때는 짧은 물고기로

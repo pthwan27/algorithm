@@ -16,7 +16,6 @@ public class BJ_2636_치즈 {
 			this.r = r;
 			this.c = c;
 		}
-
 	}
 
 	static int R, C;
@@ -26,6 +25,7 @@ public class BJ_2636_치즈 {
 	static boolean[][] isVisited;
 
 	static Queue<Cheese> bfsQ;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(in.readLine());
@@ -34,7 +34,7 @@ public class BJ_2636_치즈 {
 		C = Integer.parseInt(st.nextToken());
 
 		map = new int[R][C];
-		
+
 		for (int r = 0; r < R; r++) {
 			st = new StringTokenizer(in.readLine());
 			for (int c = 0; c < C; c++) {
@@ -42,29 +42,28 @@ public class BJ_2636_치즈 {
 				if (map[r][c] == 1) {
 					cheeseCnt++;
 				}
-				
 			}
 		}
-		
+
 		int time = 0;
 		int cnt = 0;
 		bfsQ = new ArrayDeque<>();
 
 		//치즈가 0개 될때 까지 시간 카운팅하면서 반복
-		while(cheeseCnt > 0) {
+		while (cheeseCnt > 0) {
 			//전 턴에 남은 치즈갯수 저장해둠
 			cnt = cheeseCnt;
 			bfs();
-			time++;			
+			time++;
 		}
-		
+
 		System.out.println(time);
 		System.out.println(cnt);
 	}
 
 	private static void bfs() {
 		final int[][] dArr = new int[][] { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
-		
+
 		//방문초기화 해줘야 다시 0,0부터 갈 수 있음
 		isVisited = new boolean[R][C];
 		bfsQ.offer(new Cheese(0, 0));

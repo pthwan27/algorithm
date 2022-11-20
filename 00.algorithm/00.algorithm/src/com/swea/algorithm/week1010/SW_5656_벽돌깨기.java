@@ -27,7 +27,6 @@ public class SW_5656_벽돌깨기 {
 	static int[][] map;
 
 	static int[] nums;
-	static boolean[] visited;
 	
 	static int totalCount;
 	
@@ -67,7 +66,6 @@ public class SW_5656_벽돌깨기 {
 			// 벽돌 땡기기(중력작용)
 
 			nums = new int[N];
-			visited = new boolean[W];
 
 			perm(0);
 			

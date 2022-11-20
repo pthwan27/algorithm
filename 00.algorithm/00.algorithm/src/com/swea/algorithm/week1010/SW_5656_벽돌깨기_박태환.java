@@ -80,11 +80,8 @@ public class SW_5656_벽돌깨기_박태환 {
 
 				//다음 구슬 던지기
 				go(newMap, cnt + 1);
-
 			}
-
 		}
-
 	}
 
 	private static int counting(int[][] map) {
