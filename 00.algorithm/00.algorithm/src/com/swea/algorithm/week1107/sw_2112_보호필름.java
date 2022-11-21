@@ -77,9 +77,7 @@ public class sw_2112_보호필름 {
 			testMap[cur][i] = 1;
 		}
 
-		dfs(cur + 1, cnt + 1);
-
-		
+		dfs(cur + 1, cnt + 1);		
 		
 		for (int i = 0; i < W; i++) {
 			testMap[cur][i] = map[cur][i];
@@ -89,8 +87,8 @@ public class sw_2112_보호필름 {
 
 	private static boolean passCheck(int[][] map) {
 		boolean passCheck = true;
-
 		boolean lineCheck = false;
+		
 		int cnt = 0;
 
 		int start = 0;

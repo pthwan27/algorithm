@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class sw_2382_미생물_격리미완 {
@@ -62,66 +63,75 @@ public class sw_2382_미생물_격리미완 {
 			}
 
 			for (int t = 0; t < M; t++) {
-				for (int cnt = 1; cnt < K+1; cnt++) {
-					if (nodeArr[cnt] == null)
+
+				for(int i = 0; i < N; i++) {
+					System.out.println(Arrays.toString(map[i]));					
+				}
+				System.out.println();
+				
+				for (int c = 1; c < K+1; c++) {
+					if (nodeArr[c].count == 0)
 						continue;
 
-					int r = nodeArr[cnt].r;
-					int c = nodeArr[cnt].c;
-					int count = nodeArr[cnt].count;
-
-					int dr = r + dir[nodeArr[cnt].dir][0];
-					int dc = c + dir[nodeArr[cnt].dir][1];
+					int curR = nodeArr[c].r;
+					int curC = nodeArr[c].c;
+					int curCnt = nodeArr[c].count;
+					int curDir= nodeArr[c].dir;
+					int dr = curR + dir[nodeArr[c].dir][0];
+					int dc = curC + dir[nodeArr[c].dir][1];
 
 					if (isInLine(dr, dc)) {
 						int changeDir = 0;
-						int changeCnt = count / 2;
+						int changeCnt = curCnt / 2;
 
 						//방향 바꾸기
-						if (nodeArr[cnt].dir == 1) {
+						if (nodeArr[c].dir == 1) {
 							changeDir = 2;
-						} else if (nodeArr[cnt].dir == 2) {
+						} else if (nodeArr[c].dir == 2) {
 							changeDir = 1;
-						} else if (nodeArr[cnt].dir == 3) {
+						} else if (nodeArr[c].dir == 3) {
 							changeDir = 4;
-						} else if (nodeArr[cnt].dir == 4) {
+						} else if (nodeArr[c].dir == 4) {
 							changeDir = 3;
 						}
 
-						map[r][c] = 0;
-						map[dr][dc] = cnt;
+						map[curR][curC] = 0;
+						map[dr][dc] = c;
 
-						nodeArr[cnt] = new Node(dr, dc, changeCnt, changeDir);
+						nodeArr[c] = new Node(dr, dc, changeCnt, changeDir);
 					}
 
 					else if (isInNode(dr, dc)) {
 						Node curNode = nodeArr[map[dr][dc]];
-						Node inputNode = nodeArr[cnt];
+						Node inputNode = nodeArr[c];
 
 						int changeDir = 0;
 						int changeCnt = curNode.count + inputNode.count;
 
 						if (curNode.count > inputNode.count) {
 							map[inputNode.r][inputNode.c] = 0;
-							nodeArr[cnt] = null;
+							nodeArr[c].count = 0;
 
 							changeDir = curNode.dir;
 						} else {
-							nodeArr[map[dr][dc]] = null;
+							nodeArr[map[dr][dc]].count = 0;
 							map[inputNode.r][inputNode.c] = 0;
-							map[curNode.r][curNode.c] = cnt;
+							map[curNode.r][curNode.c] = c;
 
 							changeDir = inputNode.dir;
 						}
 						nodeArr[map[dr][dc]] = new Node(dr, dc, changeCnt, changeDir);
 					}
 					else {
-						map[dr][dc] = cnt;
-						nodeArr[cnt] = new Node(dr,dc,)
+						map[dr][dc] = c;
+						nodeArr[c] = new Node(dr,dc,curCnt, curDir);
 					}
 					
 				}
+				
 			}
+			
+			
 
 		}
 
