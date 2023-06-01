@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class bj_16198_chargingEnergy {
+public class BJ_16198_chargingEnergy {
     static ArrayList<Integer> energyList;
     static int N;
     static int max = Integer.MIN_VALUE;

@@ -1,4 +1,4 @@
-package hwalgo19_광주_5반_박태환;
+package com.backjoon.algorithm.d230601;
 
 import java.io.BufferedReader;
 import java.io.IOException;
