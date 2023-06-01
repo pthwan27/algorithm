@@ -34,7 +34,6 @@ public class sw_2382_미생물_격리미완2 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = null;
-		StringBuilder sb = new StringBuilder();
 		int T = Integer.parseInt(in.readLine());
 
 		for (int tc = 1; tc <= T; tc++) {
