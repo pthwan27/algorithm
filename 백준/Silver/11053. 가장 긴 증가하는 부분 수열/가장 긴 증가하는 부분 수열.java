@@ -21,14 +21,12 @@ public class Main {
 		dp = new int[N];
 		for (int i = 0; i < N; i++) {
 			inputArr[i] = Integer.parseInt(st.nextToken());
-			dp[i] = -1;
+			dp[i] = 1;
 		}
 		
 		
 		for(int i = 0; i < N; i++) {
-			if(dp[i] == -1 ) {
-				dp[i] = 1;
-			}
+		
 			
 			for(int j = i; j > 0; j--) {
 				if(inputArr[j-1] < inputArr[i]) {
