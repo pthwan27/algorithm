@@ -1,59 +1,57 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+	static int N;
+	static int[] inputArr;
 
-	static ArrayList<Integer> inputList;
-	static int trueCnt;
-	static ArrayList<int[]> check;
+	static int result;
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(in.readLine());
+		inputArr = new int[N];
+		result = 0;
 
-		int N = Integer.parseInt(in.readLine());
-
-		check = new ArrayList<>();
-		trueCnt = 0;
-
-		StringTokenizer st = new StringTokenizer(in.readLine(), " ");
-		inputList = new ArrayList<>();
-
-		for (int i = 0; i < N; i++) {
-			inputList.add(Integer.parseInt(st.nextToken()));
-		}
-		Collections.sort(inputList);
-
-		for (int i = 0; i < N; i++) {
-			int startPos = 0;
-			int endPos = N - 1;
-
-			while (true) {
-				if (i == endPos) {
-					endPos--;
-				} else if (i == startPos) {
-					startPos++;
-				}
-
-				if (startPos == endPos) {
-					break;
-				}
-
-				if (inputList.get(i) == inputList.get(startPos) + inputList.get(endPos)) {
-					trueCnt++;
-					break;
-				} else if (inputList.get(i) > inputList.get(startPos) + inputList.get(endPos)) {
-					startPos++;
-				} else if (inputList.get(i) < inputList.get(startPos) + inputList.get(endPos)) {
-					endPos--;
-				}
+		if (N > 2) {
+			StringTokenizer st = new StringTokenizer(in.readLine());
+			for (int i = 0; i < N; i++) {
+				inputArr[i] = Integer.parseInt(st.nextToken());
 			}
 
+			Arrays.sort(inputArr);
+
+			for (int i = 0; i < N; i++) {
+				int start = 0;
+				int end = N - 1;
+
+				while (true) {
+					if(i == start) {
+						start++;
+					}
+					else if(i == end) {
+						end--;
+					}
+					
+					if (start == end) {
+						break;
+					}
+
+					if (inputArr[i] == inputArr[start] + inputArr[end]) {
+						result++;
+						break;
+					} else if (inputArr[i] < inputArr[start] + inputArr[end]) {
+						end--;
+					} else if (inputArr[i] > inputArr[start] + inputArr[end]) {
+						start++;
+					}
+				}
+			}
 		}
 
-		System.out.println(trueCnt);
+		System.out.println(result);
 	}
 }
