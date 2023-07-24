@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class Main {
         }
         for (int i = 1; i < N; i++) {
             totalVolume += dp[i][0];
-            if (dp[i-1][1] != dp[i][1]) {
+            if (dp[i-1][1] < dp[i][1]) {
                 totalCost = dp[i][1];
             } else {
                 totalCost += dp[i][1];
