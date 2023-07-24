@@ -2,69 +2,43 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int N, M;
-	static meat[] meatArr;
 
-	static class meat implements Comparable<meat> {
-		int weight, price;
-
-		public meat(int weight, int price) {
-			this.weight = weight;
-			this.price = price;
-		}
-
-		@Override
-		public int compareTo(meat o) {
-			if(this.price == o.price) {
-				return o.weight - this.weight;
-			}
-			return this.price - o.price;
-		}
-	}
-
-	public static void main(String[] args) throws IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
-		StringTokenizer st = new StringTokenizer(in.readLine());
-
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-
-		meatArr = new meat[N];
-		for (int i = 0; i < N; i++) {
-			String[] input = in.readLine().split(" ");
-			meatArr[i] = new meat(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
-		}
-
-		Arrays.sort(meatArr);
-		
-		int prevPrice = 0;
-		int totalWeight = 0;
-		int totalPrice = 0;
-		int minPrice = Integer.MAX_VALUE;
-		
-		for(meat curMeat : meatArr) {
-			totalWeight += curMeat.weight;
-			
-			if(prevPrice != curMeat.price) {
-				prevPrice = totalPrice = curMeat.price;
-			}
-			//자기보다 싼 가격의 고기만 무료라 
-			//동일한 가격이 나왔을때는 계속 더해줘야함
-			else {
-				totalPrice += curMeat.price;
-			}
-			
-			if(totalWeight >= M) {
-				minPrice = Math.min(minPrice, totalPrice);
-			}
-		}
-        
-		if(totalWeight < M) {
-			System.out.println(-1);
-		}else {			
-			System.out.println(minPrice);
-		}
-	}
-
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int[][] dp = new int[N][2];
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            dp[i][0] = Integer.parseInt(st.nextToken()); // 무게
+            dp[i][1] = Integer.parseInt(st.nextToken()); // 비용
+            // dp[i][2] = dp[i][0]; // 누적 무게
+        }
+        // 2중 배열 정렬
+        Arrays.sort(dp, (o1, o2) -> o1[1] == o2[1]? o2[0]-o1[0] : o1[1]-o2[1]);
+        // System.out.println(Arrays.deepToString(dp));
+        int minCost = Integer.MAX_VALUE;
+        int totalVolume = dp[0][0];
+        int totalCost = dp[0][1];
+        if (dp[0][0] >= M) {
+            minCost = Math.min(minCost, dp[0][1]);
+        }
+        for (int i = 1; i < N; i++) {
+            totalVolume += dp[i][0];
+            if (dp[i-1][1] != dp[i][1]) {
+                totalCost = dp[i][1];
+            } else {
+                totalCost += dp[i][1];
+            }
+            if (totalVolume >= M) {
+                minCost = Math.min(minCost, totalCost);
+            }
+        }
+        if (totalVolume < M) {
+            System.out.println(-1);
+        } else {
+            System.out.println(minCost);
+        }
+    }
 }
