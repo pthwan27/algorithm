@@ -1,4 +1,4 @@
-package com.backjoon.newAlgo.d_230227;
+package com.backjoon.newAlgo.In_202307;
 
 import java.io.BufferedReader;
 import java.io.IOException;

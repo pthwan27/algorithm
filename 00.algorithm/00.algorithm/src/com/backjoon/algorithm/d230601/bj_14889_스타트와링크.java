@@ -3,6 +3,7 @@ package com.backjoon.algorithm.d230601;
 import java.io.*;
 import java.util.*;
 
+
 public class bj_14889_스타트와링크 {
 
 	static int n;
@@ -13,7 +14,8 @@ public class bj_14889_스타트와링크 {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-
+		char a = 'A';
+		System.out.println(a);
 		n = Integer.parseInt(in.readLine());
 		abilityArr = new int[n][n];
 
