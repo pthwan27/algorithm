@@ -36,7 +36,6 @@ public class bj_2531_회전초밥 {
 		HashMap<Integer, Integer> cntMap = new HashMap<>();
 
 		cntMap.put(arr[0], 1);
-		
 
 		if (cntMap.containsKey(arr[1])) {
 			cntMap.put(arr[1], cntMap.get(arr[1]) + 1);
@@ -48,26 +47,27 @@ public class bj_2531_회전초밥 {
 		int end = 1;
 
 		while (true) {
-			if (end - start == k-1) {
+			if (end - start == k - 1) {
 				if (cntMap.containsKey(c)) {
-					cntMap.put(c, cntMap.get(c)+ 1);
+					cntMap.put(c, cntMap.get(c) + 1);
 				} else {
 					cntMap.put(c, 1);
 				}
-				
+
 				maxResult = Math.max(maxResult, cntMap.size());
-				
+
 				if (cntMap.get(c) == 1) {
 					cntMap.remove(c);
 				} else {
-					cntMap.put(c , cntMap.get(c) - 1);
+					cntMap.put(c, cntMap.get(c) - 1);
 				}
 			}
 
-			if (end - start < k-1) {
+			if (end - start < k - 1) {
 				end++;
-				if(end >= arr.length) break;
-				
+				if (end >= arr.length)
+					break;
+
 				if (cntMap.containsKey(arr[end])) {
 					cntMap.put(arr[end], cntMap.get(arr[end]) + 1);
 				} else {
