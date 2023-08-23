@@ -85,8 +85,6 @@ public class Main {
 				if (dir > 3) {
 					dir = 0;
 				}
-
-				robotArr[robotNum].dir = dir;
 				break;
 
 			case 'R':
@@ -94,8 +92,6 @@ public class Main {
 				if (dir < 0) {
 					dir = 3;
 				}
-
-				robotArr[robotNum].dir = dir;
 				break;
 
 			case 'F':
@@ -128,6 +124,8 @@ public class Main {
 				break;
 			}
 		}
+
+		robotArr[robotNum].dir = dir;
 
 		return true;
 
