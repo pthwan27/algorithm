@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -16,28 +17,29 @@ public class Main {
 		int[] dp = new int[100 + C];
 
 		Arrays.fill(dp, Integer.MAX_VALUE);
-
 		dp[0] = 0;
-		for (int a = 0; a < N; a++) {
+
+		for (int i = 0; i < N; i++) {
 			inputs = in.readLine().split(" ");
 
 			int cost = Integer.parseInt(inputs[0]);
-			int people = Integer.parseInt(inputs[1]);
+			int custom = Integer.parseInt(inputs[1]);
 
-			for (int b = people; b < 100 + C; b++) {
-				if (dp[b - people] != Integer.MAX_VALUE) {
-					int prev = dp[b - people];
-					dp[b] = Math.min(dp[b], cost + prev);
+			for (int a = custom; a < 100 + C; a++) {
+				if (dp[a - custom] != Integer.MAX_VALUE) {
+					int prev = dp[a - custom];
+
+					dp[a] = Math.min(prev + cost, dp[a]);
 				}
 			}
 		}
-
-		int minResult = Integer.MAX_VALUE;
-
-		for (int i = C; i < 100 + C; i++) {
-			minResult = Math.min(minResult, dp[i]);
+		
+		int result = Integer.MAX_VALUE;
+		
+		for(int i = C; i < 100+C; i++) {
+			result = Math.min(dp[i], result);			
 		}
 		
-		System.out.println(minResult);
+		System.out.println(result);
 	}
 }
