@@ -3,7 +3,7 @@ package com.programmers;
 import java.io.*;
 import java.util.*;
 
-class Solution {
+public class 방금그곡 {
 	// A B C D E F G
 	// A# -> O
 	// C# -> P
