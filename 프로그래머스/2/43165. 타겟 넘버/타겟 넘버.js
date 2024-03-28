@@ -1,20 +1,22 @@
 function solution(numbers, target) {
-    let answer = 0;
-    
-    dfs(0, 0);
-    
-    return answer;
-    
-    function dfs(idx, sum){
-        // console.log(`idx = ${idx} , sum = ${sum}`);
-        
-        if(idx > numbers.length - 1){
-            if(sum == target) answer++;
-            
-            return;
+    const memo = new Map();
+
+    function dfs(idx, sum) {
+        if (idx === numbers.length) {
+            return sum === target ? 1 : 0;
         }
-        
-        dfs(idx + 1, sum + numbers[idx]);
-        dfs(idx + 1, sum - numbers[idx]);        
+
+        const key = `${idx},${sum}`;
+        if (memo.has(key)) {
+            return memo.get(key);
+        }
+
+        const add = dfs(idx + 1, sum + numbers[idx]);
+        const subtract = dfs(idx + 1, sum - numbers[idx]);
+
+        memo.set(key, add + subtract);
+        return add + subtract;
     }
+
+    return dfs(0, 0);
 }
