@@ -19,7 +19,6 @@ function solution(users, emoticons) {
     }
     
     let emoDiscounts = comb(discounts, emoticons.length);
-    console.log(emoDiscounts);
     
     emoDiscounts.forEach((discount, idx) => {        
         let subsCnt = 0;
@@ -28,12 +27,11 @@ function solution(users, emoticons) {
         users.forEach((user) => {
             let amt = 0;
             
-            for(let i = 0; i < emoticons.length; i++){
-                //유저 구매 할인 기준 충족 시
-                if(user[0] <= discount[i]){
-                    amt += (emoticons[i] * (100 - discount[i])) / 100;
+            emoticons.forEach((emo, idx) => {
+                if(user[0] <= discount[idx]){
+                    amt += (emoticons[idx] * (100 - discount[idx])) / 100;
                 }
-            }
+            });
             
             if(amt >= user[1]){
                 subsCnt++;
@@ -43,10 +41,8 @@ function solution(users, emoticons) {
             }
         });
         
-        if(subsCnt > answer[0]){
+        if(subsCnt > answer[0] || (subsCnt === answer[0] && totalAmt > answer[1])){
             answer = [subsCnt, totalAmt];
-        }else if(subsCnt === answer[0] && totalAmt > answer[1]){
-            answer[1] = totalAmt;   
         }
     });
     
