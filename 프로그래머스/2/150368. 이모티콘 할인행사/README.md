@@ -6,6 +6,8 @@
 
 메모리: 33.6 MB, 시간: 0.34 ms
 
+시간복잡오 : O(4^m * n * m)
+
 ### 구분
 
 코딩테스트 연습 > 2023 KAKAO BLIND RECRUITMENT
