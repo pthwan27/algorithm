@@ -68,12 +68,9 @@ class MinHeap {
     
 }
 
-let rSize = 0;
-let cSize = 0;
 function solution(maps) {
-    let answer = 0;
-    rSize = maps.length;
-    cSize = maps[0].length;
+    const rSize = maps.length;
+    const cSize = maps[0].length;
     
     let start = [];
     let lever = [];
@@ -90,16 +87,12 @@ function solution(maps) {
         })
     });
     
-    answer += bfs(maps, start, lever, isVisited.map(row => [...row]));
-    
-    answer += bfs(maps, lever, exit, isVisited.map(row => [...row]));    
-    
-    return answer ? answer : -1;
+    return bfs(maps, start, lever, isVisited.map(e => [...e]), rSize, cSize) + bfs(maps, lever, exit, isVisited.map(e => [...e]), rSize, cSize) || -1;
 }
 
 const dr = [-1,0,1,0];
 const dc = [0,-1,0,1];
-const bfs = (map, S, E, isVisited) => {
+const bfs = (map, S, E, isVisited, rSize, cSize) => {
     let minHeap = new MinHeap();
     minHeap.push(new node(S[0],S[1], 0));
     isVisited[S[0]][S[1]] = 1;
@@ -120,14 +113,14 @@ const bfs = (map, S, E, isVisited) => {
             let nextC = cC + dc[i];
             let nextCnt = cCnt + 1;
             
-            if(isIn(nextR, nextC) && !isVisited[nextR][nextC]){
+            if(isIn(nextR, nextC, rSize, cSize) && !isVisited[nextR][nextC]){
                 isVisited[nextR][nextC] = 1;
                 minHeap.push(new node(nextR, nextC, nextCnt));
             }
         }
     }   
 }
-const isIn = (r, c) => {
+const isIn = (r, c, rSize, cSize) => {
     return r >= 0 && r < rSize && c >= 0 && c < cSize;
 }
 
