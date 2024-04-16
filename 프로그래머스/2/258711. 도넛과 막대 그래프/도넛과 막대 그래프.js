@@ -1,7 +1,6 @@
 function solution(edges) {    
-    let inout = new Array(1000000).fill(-1);
-    let maxIdx = -1;
-    
+    let maxIdx = edges.reduce((acc, edge) => Math.max(acc,edge[0],edge[1]), -1);
+    let inout = new Array(maxIdx).fill(-1);
     
     let generatedV = -1;
     let donut = 0;
@@ -9,16 +8,13 @@ function solution(edges) {
     let stickE = 0;
     let eight = 0;
     
-    for (let i = 0; i < inout.length; i++) {
+    for (let i = 0; i <= maxIdx; i++) {
         inout[i] = new node();
     }
 
     edges.forEach(edge => {
         inout[edge[0]].out();
         inout[edge[1]].in();
-        
-        if(maxIdx < edge[0]) maxIdx = edge[0];
-        if(maxIdx < edge[1]) maxIdx = edge[1];
     });
     
     for(let i = 1; i <= maxIdx; i++){
@@ -48,9 +44,6 @@ function solution(edges) {
             stickS++; stickE++;
         }
     }
-    
-    // console.log(inout);
-    // console.log(`maxIdx : ${maxIdx} / ${stickS}, ${stickE} / eight : ${eight} / ${generatedVout}`)
     return [generatedV, generatedVout - (Math.min(stickE, stickS) + eight), Math.min(stickE, stickS), eight];
 }
 class node{
