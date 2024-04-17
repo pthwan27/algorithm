@@ -1,26 +1,20 @@
 function solution(targets) {
-    var answer = 1;
-    
-    targets.sort((a,b) => {
-        if(a[1] == b[1]){
-            return a[0] - b[0];
-        }else{
-            return a[1] - b[1];
-        }
+    targets.sort(([s1,e1], [s2,e2]) => {
+        if(e1 === e2) return s2 - s1;
+        else return e1 - e2;
     });
     console.log(targets);
-    
-    var end = targets[0][1];
-    
-    for(var i = 0; i < targets.length; i++){
-        if(end > targets[i][0]){
-            continue;
-        }else{
+    let answer = 1;
+    let e = targets[0][1];
+    for(let i = 1; i < targets.length; i++){
+        const nextTarget = targets[i];
+        
+        if(e > nextTarget[0] && e <= nextTarget[1]) continue;
+        else {
             answer++;
-            end = targets[i][1];
+            e = nextTarget[1];
         }
     }
     
-    var end = targets[0][1];
     return answer;
 }
