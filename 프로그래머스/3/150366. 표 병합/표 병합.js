@@ -12,7 +12,7 @@ function solution(commands) {
         let [command, ...rest] = e.split(" ");
         switch (command) {
             case 'UPDATE' : {
-                if(rest.length === 3) {
+                if(rest.length > 2) {
                     let [r,c,v] = rest;
                     updateOne(r,c,v);
                 }else{
@@ -65,49 +65,58 @@ function solution(commands) {
     function merge(r1, c1, r2, c2, gn){
         let [v1, v2] = [valueMap[r1][c1], valueMap[r2][c2]];
         let [g1, g2] = [groupNumMap[r1][c1], groupNumMap[r2][c2]];
-        
-        let value = v1;
-        
-        if(v1 === 'EMPTY' && v2 !== 'EMPTY') {
-            value = v2;
-        }
-        if (g1 !== 0 && g2 !== 0 && g1 === g2) {
-            return false;
+        if(v1 === 'EMPTY') {
+            v1 = v2;
         }
         
-        [valueMap[r1][c1], groupNumMap[r1][c1]] = [value, gn];
-        [valueMap[r2][c2], groupNumMap[r2][c2]] = [value, gn];
-       
-
-        for(let r = 1; r < 51; r++){
-            for(let c = 1; c < 51; c++){
-                if((g1 !== 0 && groupNumMap[r][c] === g1) || (g2 !== 0 && groupNumMap[r][c] === g2)) {
-                    groupNumMap[r][c] = gn;
-                    valueMap[r][c] = value;
-                } 
-            }    
+        if(g1 === 0 && g2 === 0) {
+            valueMap[r1][c1] = v1, valueMap[r2][c2] = v1;
+            groupNumMap[r1][c1] = gn, groupNumMap[r2][c2] = gn;
+            
+            group.set(gn, v1);
+            return true;
         }
-        group.set(gn, value);
         
+        if(g1 !== 0 && g2 !== 0){
+            group.delete(g2);
+            
+            for(let r = 1; r < 51; r++){
+                for(let c = 1; c < 51; c++){
+                    if(groupNumMap[r][c] = g2) {
+                        groupNumMap[r][c] = g1;
+                        
+                        valueMap[r][c] = v1;
+                    } 
+                }    
+            }
+        }
+        if(g1 === 0) {
+            valueMap[r1][c1] = v2;
+            groupNumMap[r1][c1] = g2;
+        }
         
-        return true;
+        if(g2 === 0) {
+            valueMap[r2][c2] = v1;
+            groupNumMap[r2][c2] = g1;
+        }
+        
+        return false;
     }
     
     function unmerge(r, c){
         let value = valueMap[r][c];
         let groupNum = groupNumMap[r][c];
         
-        if(groupNum === 0) return;
-        
         for(let ri = 1; ri < 51; ri++){
             for(let cj = 1; cj < 51; cj++){
                 if(groupNumMap[ri][cj] === groupNum) {
-                    [groupNumMap[ri][cj],valueMap[ri][cj]] = [0,'EMPTY'];
+                    groupNumMap[ri][cj] = 0;
+
+                    valueMap[ri][cj] = 'EMPTY';
                 } 
             }    
         }
         valueMap[r][c] = value;
-        groupNumMap[r][c] = groupNum;
     }
     
     function print(r, c){
