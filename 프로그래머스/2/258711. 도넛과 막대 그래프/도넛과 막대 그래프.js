@@ -1,66 +1,56 @@
-class node {
-    constructor() {
-      this.i = -1;
-      this.o = -1;
-    }
-    in() {
-      if (this.i == -1) {
-        this.i = 1;
-        this.o = 0;
-      } else this.i++;
-    }
-    out() {
-      if (this.o == -1) {
-        this.o = 1;
-        this.i = 0;
-      } else this.o++;
-    }
-  }
-  function solution(edges) {
-    let maxIdx = edges.reduce((acc, edge) => Math.max(acc, edge[0], edge[1]), -1);
-    let inout = new Array(maxIdx + 1).fill().map(() => new node());
-    let generatedV = -1;
-    let generatedVout = -1;
-  
-    edges.forEach(([a, b]) => {
-      inout[a].out();
-      inout[b].in();
+function solution(edges) {    
+    const pointMap = new Map();
+    const graph = new Array(1000001).fill().map(()=> []);
+    
+    edges.map(e => {
+        let start = e[0];
+        let end = e[1];
+        
+        if(!pointMap.has(start)) {
+            pointMap.set(start, [0, 1]);
+        }else {
+            pointMap.get(start)[1]++;
+        }
+        
+        if(!pointMap.has(end)) {
+            pointMap.set(end, [1, 0]);
+        }else {
+            pointMap.get(end)[0]++;
+        }
+        
+        graph[start].push(end);
     });
-  
-    for (let i = 1; i <= maxIdx; i++) {
-      if (inout[i].i === 0 && inout[i].o >= 2) {
-        generatedV = i;
-        generatedVout = inout[i].o;
-        break;
-      }
+    
+    let generatedNum = [];
+    
+    for(const [key, value] of pointMap) {
+        if(value[0] === 0 && value[1] >= 2) {
+            generatedNum[0] = key;
+            generatedNum[1] = value[1];
+            
+            graph[generatedNum[0]].forEach(e => {
+                pointMap.get(e)[0]--;
+            })
+            break;
+        }
     }
-  
-    edges.forEach(([a, b]) => {
-      if (a == generatedV) {
-        inout[a].o--;
-        inout[b].i--;
-      }
-    });
-  
-    let stickS = 0;
-    let stickE = 0;
+    
+    let donut = 0;
+    let stick = [0, 0];
     let eight = 0;
-  
-    for (let i = 1; i <= maxIdx; i++) {
-      if (i == generatedV) continue;
-      if (inout[i].i == 2 && inout[i].o == 2) eight++;
-      if (inout[i].i == 1 && inout[i].o == 0) stickE++;
-      if (inout[i].i == 0 && inout[i].o == 1) stickS++;
-      if (inout[i].i == 0 && inout[i].o == 0) {
-        stickS++;
-        stickE++;
-      }
+    for(const [key, value] of pointMap) {
+        if(value[0] === 0 && value[1] === 0) {
+            stick[0]++;
+            stick[1]++;
+        }
+        
+        if(value[0] === 0 && value[1] === 1) stick[0]++;
+        
+        if(value[0] === 1 && value[1] === 0) stick[1]++;
+        
+        if(value[0] === 2 && value[1] === 2) eight++;
     }
-    return [
-      generatedV,
-      generatedVout - (Math.min(stickE, stickS) + eight),
-      Math.min(stickE, stickS),
-      eight,
-    ];
-  }
-  
+    stick = Math.min(stick[0], stick[1]);
+    
+    return [generatedNum[0], generatedNum[1] - eight - stick, stick, eight];
+}
