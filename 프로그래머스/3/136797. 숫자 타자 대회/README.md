@@ -1,10 +1,10 @@
 # [level 3] 숫자 타자 대회 - 136797 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/136797?language=javascript) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/136797) 
 
 ### 성능 요약
 
-메모리: 190 MB, 시간: 863.75 ms
+메모리: 190 MB, 시간: 515.35 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 06월 01일 21:03:13
+2024년 06월 02일 12:00:53
 
 ### 문제 설명
 
