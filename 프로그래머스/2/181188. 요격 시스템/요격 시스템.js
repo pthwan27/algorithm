@@ -1,20 +1,19 @@
 function solution(targets) {
-  targets.sort(([s1, e1], [s2, e2]) => {
-    if (e1 === e2) return s2 - s1;
-    else return e1 - e2;
-  });
-  let answer = 1;
-  let e = targets[0][1];
-
-  for (let i = 1; i < targets.length; i++) {
-    const nextTarget = targets[i];
-
-    if (e > nextTarget[0] && e <= nextTarget[1]) continue;
-    else {
-      answer++;
-      e = nextTarget[1];
+    let answer = 1;
+    
+    targets.sort((a,b) => {
+        return a[1] - b[1];
+    });
+    
+    let lastMissile = targets[0][1];
+    
+    for(let i = 1; i < targets.length; i++){
+        let [s,e] = targets[i];
+        if(s < lastMissile) continue;
+        else {
+            answer++;
+            lastMissile = e;
+        }
     }
-  }
-
-  return answer;
+    return answer;
 }
