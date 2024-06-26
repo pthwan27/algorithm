@@ -24,25 +24,22 @@ function solution(temperature, t1, t2, a, b, onboard) {
         for(let j = start; j <= end; j++){
             if(temperature < j){
                 if(j-1 >= 0) {
-                    dp[i][j] = dp[i-1][j-1] + a < dp[i][j] ? dp[i-1][j-1] + a : dp[i][j];
+                    dp[i][j] = Math.min(dp[i-1][j-1] + a, dp[i][j]);
                 }
-                
-                dp[i][j] = dp[i-1][j+1] < dp[i][j] ? dp[i-1][j+1] : dp[i][j];
-                dp[i][j] = dp[i-1][j] + b < dp[i][j] ? dp[i-1][j] + b : dp[i][j]
+                dp[i][j] = Math.min(dp[i-1][j+1], Math.min(dp[i][j], dp[i-1][j] + b));
+
             }else if(temperature > j) {
                 if(j-1 >= 0) {
-                    dp[i][j] = dp[i-1][j-1] < dp[i][j] ? dp[i-1][j-1] : dp[i][j];
+                    dp[i][j] = Math.min(dp[i-1][j-1], dp[i][j]);
                 }
-                
-                dp[i][j] = dp[i-1][j+1] + a < dp[i][j] ? dp[i-1][j+1] + a : dp[i][j];
-                dp[i][j] = dp[i-1][j] + b < dp[i][j] ? dp[i-1][j] + b : dp[i][j];
+                dp[i][j] = Math.min(dp[i-1][j+1] + a, Math.min(dp[i][j], dp[i-1][j] + b));
+
             }else {
                 if(j-1 >= 0) {
-                    dp[i][j] = dp[i-1][j-1] < dp[i][j] ? dp[i-1][j-1] : dp[i][j];
+                    dp[i][j] = Math.min(dp[i-1][j-1], dp[i][j]);
                 }
+                dp[i][j] = Math.min(dp[i-1][j+1], Math.min(dp[i][j], dp[i-1][j]));
                 
-                dp[i][j] = dp[i-1][j+1] < dp[i][j] ? dp[i-1][j+1] : dp[i][j];
-                dp[i][j] = dp[i-1][j] < dp[i][j] ? dp[i-1][j] : dp[i][j]
             }
         }
     }
