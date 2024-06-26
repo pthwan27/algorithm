@@ -1,25 +1,33 @@
-class MinHeap{
-    constructor() {
+class minHeap {
+    constructor(){
         this.heap = [];
     }
     size() {
         return this.heap.length;
     }
-    peek() {
-        if(this.heap.length === 0) return null;
-        else return this.heap[0];
-    }
-    push(e) {
+    
+    push(e){
         this.heap.push(e);
         
         this.bubbleUp();
     }
+    pop(){
+        if(this.heap.length === 0) return null;
+        if(this.heap.length === 1) return this.heap.pop();
+        
+        let minValue = this.heap[0];
+        
+        this.heap[0] = this.heap.pop();
+        
+        this.bubbleDown();
+        return minValue;
+    }
     
-    bubbleUp() {
+    bubbleUp(){
         let curIdx = this.heap.length - 1;
         let parentIdx = Math.floor((curIdx - 1) / 2);
         
-        while(this.heap[parentIdx] && this.heap[parentIdx] > this.heap[curIdx]){
+        while(this.heap[parentIdx] && this.heap[curIdx] < this.heap[parentIdx]){
             this.swap(curIdx, parentIdx);
             
             curIdx = parentIdx;
@@ -27,36 +35,24 @@ class MinHeap{
         }
     }
     
-    pop(){
-        if(this.heap.length === 0) return null;
-        if(this.heap.length === 1) return this.heap.pop();
-        
-        let curValue = this.heap[0];
-        
-        this.heap[0] = this.heap.pop();
-        
-        this.bubbleDown();
-        
-        return curValue;
-    }
     bubbleDown(){
         let curIdx = 0;
         let leftIdx = curIdx * 2 + 1;
         let rightIdx = curIdx * 2 + 2;
         
         while((this.heap[leftIdx] && this.heap[leftIdx] < this.heap[curIdx]) ||
-              (this.heap[rightIdx] && this.heap[rightIdx] < this.heap[curIdx])){
+             (this.heap[rightIdx] && this.heap[rightIdx] < this.heap[curIdx])) {
             let smallerIdx = leftIdx;
             
-            if(this.heap[rightIdx] && this.heap[rightIdx] < this.heap[leftIdx]) {
+            if(this.heap[rightIdx] && this.heap[rightIdx] < this.heap[leftIdx]){
                 smallerIdx = rightIdx;
             }
             
-            this.swap(curIdx, smallerIdx);
+            this.swap(smallerIdx, curIdx);
             
             curIdx = smallerIdx;
             leftIdx = curIdx * 2 + 1;
-            rightIdx = curIdx * 2 + 2;
+            rightIdx = curIdx * 2 + 2;            
         }
     }
     
@@ -64,46 +60,56 @@ class MinHeap{
         [this.heap[idx1], this.heap[idx2]] = [this.heap[idx2], this.heap[idx1]];
     }
 }
+
 function solution(k, n, reqs) {
-    let answer = Infinity;
+    let result = [];
     
-    const comb = (remain, curIdx, combArr, calcTime) => {
-        if(curIdx === k) {
-            combArr[curIdx] = remain + 1;
-            
-            calcTime(combArr);
+    let mentos = new Array(k+1).fill(1);
+    
+    function comb(remain, idx) {
+        if(idx > k) return;
+        
+        if(remain === 0) {
+            result.push(calcTime(mentos));
             return;
         }
-        
+        if(idx === k) {
+            mentos[idx] += remain;
+            comb(0, idx + 1);
+            mentos[idx] -= remain;
+            return;
+        }
         for(let i = 0; i <= remain; i++){
-            combArr[curIdx] = i + 1;
-            comb(remain - i, curIdx + 1, combArr, calcTime);
+            mentos[idx + 1] += i;
+            comb(remain - i, idx + 1);
+            mentos[idx + 1] -= i;
         }
     }
-    const calcTime = (mentos) => {
-        let minHeapArr = new Array(k+1).fill().map(() => new MinHeap());
-        let totalDelayTime = 0;
+    
+    function calcTime(mento) {
+        let mentoHeap = new Array(k+1).fill().map(e => new minHeap());
+        let totalWaitingTime = 0;
         
-        for([sT,dT,type] of reqs) {
-            if(minHeapArr[type].peek() <= sT){
-                minHeapArr[type].pop();
-                minHeapArr[type].push(sT + dT);
-                continue;
-            }
-            
-            if(minHeapArr[type].size() < mentos[type]){
-                minHeapArr[type].push(sT + dT);
+        reqs.forEach(([startTime, durTime, type]) => {
+            if(mentoHeap[type].size() < mento[type]){
+                mentoHeap[type].push(startTime + durTime);
             }else{
-                let nextEndTime = minHeapArr[type].pop();
-                totalDelayTime += nextEndTime - sT;
-                minHeapArr[type].push(nextEndTime + dT);
+                let popTime = mentoHeap[type].pop();
+                
+                if(popTime > startTime){
+                    totalWaitingTime += popTime - startTime;
+                    mentoHeap[type].push(popTime + durTime);
+                }else{
+                    mentoHeap[type].push(startTime + durTime);
+                }
+                    
             }
-        }
+        });
         
-        answer = Math.min(answer, totalDelayTime);
+        return totalWaitingTime;
     }
     
-    comb(n-k, 1, new Array(k).fill(0), calcTime);
+    comb(n-k, 0);
     
-    return answer;
+    return Math.min(...result);
 }
