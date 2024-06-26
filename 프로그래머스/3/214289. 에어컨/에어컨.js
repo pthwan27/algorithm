@@ -3,45 +3,49 @@ function solution(temperature, t1, t2, a, b, onboard) {
     t1 += 10;
     t2 += 10;
     
-    const dp = Array.from({length : onboard.length + 1}, () => new Array(52).fill(Infinity));
+    let minT = t1 < temperature ? t1 : temperature; 
+    let maxT = t2 > temperature ? t2 : temperature; 
+    
+    let dp = Array.from({length : onboard.length + 1}, () => new Array(52).fill(Infinity));
     dp[0][temperature] = 0;
     
-    
-    if(temperature >= t1 && temperature <= t2) return 0;
-    
-    for(let time = 1; time < dp.length; time++){
-        let start = 0; 
-        let end = 0;
+    for(let i = 1; i < dp.length; i++){
+        let start = 0;
+        let end = 50;
         
-        if(onboard[time - 1]){
+        if(onboard[i-1]) {
             start = t1;
             end = t2;
         }else{
-            start = Math.min(t1, temperature);
-            end = Math.max(t2, temperature);
+            start = minT;
+            end = maxT;
         }
         
-        for(let temp = start; temp <= end; temp++){
-            if(temp < temperature) {
-                if(temp - 1 >= 0){
-                    dp[time][temp] = Math.min(dp[time][temp], dp[time - 1][temp - 1]);
+        for(let j = start; j <= end; j++){
+            if(temperature < j){
+                if(j-1 >= 0) {
+                    dp[i][j] = dp[i-1][j-1] + a < dp[i][j] ? dp[i-1][j-1] + a : dp[i][j];
                 }
                 
-                dp[time][temp] = Math.min(dp[time][temp], Math.min(dp[time - 1][temp] + b, dp[time - 1][temp + 1] + a)); 
-            }else if(temp > temperature){
-                if(temp - 1 >= 0){
-                    dp[time][temp] = Math.min(dp[time][temp], dp[time - 1][temp - 1] + a);
+                dp[i][j] = dp[i-1][j+1] < dp[i][j] ? dp[i-1][j+1] : dp[i][j];
+                dp[i][j] = dp[i-1][j] + b < dp[i][j] ? dp[i-1][j] + b : dp[i][j]
+            }else if(temperature > j) {
+                if(j-1 >= 0) {
+                    dp[i][j] = dp[i-1][j-1] < dp[i][j] ? dp[i-1][j-1] : dp[i][j];
                 }
                 
-                dp[time][temp] = Math.min(dp[time][temp],Math.min( dp[time - 1][temp] + b), dp[time - 1][temp + 1]); 
+                dp[i][j] = dp[i-1][j+1] + a < dp[i][j] ? dp[i-1][j+1] + a : dp[i][j];
+                dp[i][j] = dp[i-1][j] + b < dp[i][j] ? dp[i-1][j] + b : dp[i][j];
             }else {
-                if(temp - 1 >= 0){
-                    dp[time][temp] = Math.min(dp[time][temp], dp[time - 1][temp - 1]);
+                if(j-1 >= 0) {
+                    dp[i][j] = dp[i-1][j-1] < dp[i][j] ? dp[i-1][j-1] : dp[i][j];
                 }
                 
-                dp[time][temp] = Math.min(dp[time][temp], Math.min(dp[time - 1][temp], dp[time - 1][temp + 1]));
+                dp[i][j] = dp[i-1][j+1] < dp[i][j] ? dp[i-1][j+1] : dp[i][j];
+                dp[i][j] = dp[i-1][j] < dp[i][j] ? dp[i-1][j] : dp[i][j]
             }
         }
     }
-    return (Math.min(...dp[dp.length - 1]));
+    
+    return Math.min(...dp[dp.length - 1]);
 }
