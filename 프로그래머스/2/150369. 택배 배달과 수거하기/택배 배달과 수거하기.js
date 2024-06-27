@@ -1,48 +1,70 @@
 function solution(cap, n, deliveries, pickups) {
-    var answer = 0;
+    let answer = 0;
     
-    const findEndPoint = (arr) => {
-        for(let i = arr.length - 1; i >= 0; i--){
-            if(arr[i] > 0) return i;
-            else arr.pop();
-        }
-        return -1;
+    const dQ = [];
+    const pQ = [];
+    
+    for(let i = 0; i < n; i++){
+        if(deliveries[i]) dQ.push([i + 1, deliveries[i]])
+        if(pickups[i]) pQ.push([i + 1,pickups[i]])
     }
     
-    const calc = (arr, cnt) => {
-        let endPoint = findEndPoint(arr);
+    let dLen = calcLen(dQ);
+    let pLen = calcLen(pQ);
+    
+    let maxLen = Math.max(dLen, pLen);
+    
+    while(maxLen) {
+        let capCnt = cap;
+        let maxIdx = -1;
         
-        let end = endPoint;
-        
-        if(end == -1) return -1;
-        else{
-            while(cnt > 0){
-                if(arr[end] >= cnt){
-                    arr[end] -= cnt;
-                    cnt = 0;
-                    break;
-                }else{
-                    cnt -= arr[end];
-                    arr[end] = 0;
-                    end--;
-                }
+        while(capCnt && dLen){
+            let [idx, boxCnt] = dQ.pop();
+            maxIdx = Math.max(maxIdx, idx);
+            if(capCnt < boxCnt) {
+                boxCnt -= capCnt;
+                capCnt = 0;
+            } else {
+                capCnt -= boxCnt;
+                boxCnt = 0;
             }
+            
+            if(boxCnt) {
+                dQ.push([idx, boxCnt]);
+                break;
+            };
+            dLen = calcLen(dQ);
         }
-        return findEndPoint(arr);
-    }
-    
-    let deliveryEndPoint = findEndPoint(deliveries);
-    let pickupEndPoint = findEndPoint(pickups);
-    let maxEndPoint = Math.max(deliveryEndPoint, pickupEndPoint);
-    
-    while(maxEndPoint >= 0){
-        if(maxEndPoint == 0) answer += 2;
-        else answer += (maxEndPoint+1) * 2;
         
-        deliveryEndPoint = calc(deliveries, cap);
-        pickupEndPoint = calc(pickups, cap);
-        maxEndPoint = Math.max(deliveryEndPoint, pickupEndPoint);
+        capCnt = cap;
+        
+        while(capCnt && pLen){
+            let [idx, boxCnt] = pQ.pop();
+            maxIdx = Math.max(maxIdx, idx);
+            if(capCnt < boxCnt) {
+                boxCnt -= capCnt;
+                capCnt = 0;
+            } else {
+                capCnt -= boxCnt;
+                boxCnt = 0;
+            }
+            
+            if(boxCnt) {
+                pQ.push([idx,boxCnt]);
+                break;
+            };
+            
+            pLen = calcLen(pQ);
+        }
+        
+        maxLen = Math.max(dLen, pLen);
+        
+        answer += maxIdx * 2;
     }
     
     return answer;
 }
+
+function calcLen(arr) {
+    return !!arr[arr.length - 1] ? arr[arr.length - 1][0] : 0;
+} 
