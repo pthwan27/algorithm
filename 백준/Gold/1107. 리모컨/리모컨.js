@@ -1,7 +1,7 @@
 const readline = require("readline");
 
 const rl = readline.createInterface({
-  input : process.stdin,
+  input: process.stdin,
   output: process.stdout,
 });
 
@@ -21,7 +21,7 @@ rl.on("close", () => {
     return;
   }
 
-  if (M) {
+  if (M !== 0) {
     input[2].split(" ").map((e) => {
       buttons[e] = false;
     });
@@ -31,17 +31,17 @@ rl.on("close", () => {
   let targetChArr = targetCh.toString().split("").map(Number);
 
   let cnt = Math.min(Math.abs(targetCh - 100), targetChArr.length + Math.abs(targetCh - 100));
-  let minCnt = cnt;
 
-  for (let i = 0; i < 1000000; i++) {
+  let max = Math.abs(targetCh * 2 - 100);
+  for (let i = 0; i <= max; i++) {
     let ch = i.toString().split("").map(Number);
 
     if (isAble(ch, buttons)) {
-      minCnt = Math.min(ch.length + Math.abs(targetCh - i), minCnt);
+      cnt = Math.min(ch.length + Math.abs(targetCh - i), cnt);
     }
   }
 
-  console.log(minCnt);
+  console.log(cnt);
 });
 
 function isAble(ch, buttons) {
