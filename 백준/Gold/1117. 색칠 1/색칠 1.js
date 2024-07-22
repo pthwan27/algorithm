@@ -18,7 +18,7 @@ rl.on("close", () => {
 
   let answer = W * H;
 
-  let dbWidth = f > W / 2n ? W - f : f;
+  let dbWidth = W - f < f ? W - f : f;
 
   if (dbWidth <= x1) {
     answer -= paintW * paintH * (c + 1n);
