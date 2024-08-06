@@ -11,17 +11,20 @@ rl.on("line", (e) => {
 });
 
 rl.on("close", () => {
-  const N = input[0];
+  const N = Number(input[0]);
 
-  let one = 1;
-  let result = 1;
-  if (N % 5 === 0 || N % 2 === 0) {
+  if (N % 2 === 0 || N % 5 === 0) {
     console.log(-1);
-  } else {
-    while (one % N != 0) {
-      result++;
-      one = 10 * (one % N) + 1;
-    }
-    console.log(result);
+    return;
   }
+
+  let mod = 1 % N;
+  let answer = 1;
+
+  while (mod !== 0) {
+    mod = (mod * 10 + 1) % N;
+    answer++;
+  }
+
+  console.log(answer);
 });
